@@ -87,22 +87,7 @@ public class Platformer extends JPanel implements KeyListener{
     }
 
     public void animate() {
-        int newX = player.getPositionX();
-        int newY = player.getPositionY();
-
-        // Изменяем координаты в зависимости от нажатых клавиш
-        if (isLeft) newX -= player.getVx();
-        if (isRight) newX += player.getVx();
-        if (isUp) newY -= player.getVy();  // Исправлено: "-"
-        if (isDown) newY += player.getVy();
-
-        // Ограничение движения в пределах экрана
-        newX = Math.max(0, Math.min(newX, ScreenWidth - SpriteWidth));
-        newY = Math.max(0, Math.min(newY, ScreenHeight - SpriteHeight));
-
-        // Обновляем позицию игрока и перерисовываем экран
-        player.setPositionX(newX);
-        player.setPositionY(newY);
+        player.update(isLeft, isRight, isUp, isDown);
         repaint();
     }
 
