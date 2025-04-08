@@ -2,29 +2,26 @@ package Platformer;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.io.IOException;
 import static Platformer.Constant.*;
 
-public class Platformer extends JPanel implements KeyListener{
+public class Platformer extends JPanel{
 
     private Player player;
     private Thread thread;
-
-    // переменные показывающие, зажата ли кнопка
-    private boolean isLeft = false;
-    private boolean isRight = false;
-    private boolean isUp = false;
-    private boolean isDown = false;
+    private InputListener listener;
 
     public Platformer() throws IOException {
         super();
         setFocusable(true);
+
         // Создаем игрока в левом нижнем углу
         this.player = new Player("ee86dafa1924dd4c209bcf0a2145ebab.jpg", 0, ScreenHeight - SpriteHeight);
+
         // Регистрируем слушатель клавиш
-        this.addKeyListener(this);
+        listener = new InputListener();
+        this.addKeyListener(listener);
+
         // Создаем и запускаем поток анимации
         thread = new MoveThread(this);
         thread.setDaemon(true); // Поток завершится при закрытии приложения
@@ -48,29 +45,6 @@ public class Platformer extends JPanel implements KeyListener{
         );
     }
 
-    @Override
-    public void keyTyped(KeyEvent e) {
-
-    }
-
-    @Override
-    public void keyPressed(KeyEvent e) {
-        // Устанавливаем флаги при нажатии клавиш
-        if (e.getKeyCode()==KeyEvent.VK_LEFT) isLeft = true;
-        if (e.getKeyCode()==KeyEvent.VK_RIGHT) isRight = true;
-        if (e.getKeyCode()==KeyEvent.VK_UP) isUp = true;
-        if (e.getKeyCode()==KeyEvent.VK_DOWN) isDown = true;
-    }
-
-    @Override
-    public void keyReleased(KeyEvent e) {
-        // Сбрасываем флаги при отпускании клавиш
-        if (e.getKeyCode()==KeyEvent.VK_LEFT) isLeft = false;
-        if (e.getKeyCode()==KeyEvent.VK_RIGHT) isRight = false;
-        if (e.getKeyCode()==KeyEvent.VK_UP) isUp = false;
-        if (e.getKeyCode()==KeyEvent.VK_DOWN) isDown = false;
-    }
-
     public static void main(String[] args) throws IOException {
         var frame = new JFrame();
         var panel = new Platformer();
@@ -87,7 +61,7 @@ public class Platformer extends JPanel implements KeyListener{
     }
 
     public void animate() {
-        player.update(isLeft, isRight, isUp, isDown);
+        player.update();
         repaint();
     }
 
