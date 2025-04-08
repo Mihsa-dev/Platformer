@@ -1,6 +1,7 @@
 package Platformer;
 
 import static Platformer.Constant.*;
+import static Platformer.InputListener.*;
 
 public class Player extends GameObj{
 
@@ -17,7 +18,8 @@ public class Player extends GameObj{
         vy = 1;  // Базовая скорость по вертикали
     }
 
-    public void update(boolean isLeft, boolean isRight, boolean isUp, boolean isDown) {
+    @Override
+    public void update() {
         int newX = getPositionX();
         int newY = getPositionY();
 
