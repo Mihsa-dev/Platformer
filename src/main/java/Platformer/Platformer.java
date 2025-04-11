@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.Console;
 import java.io.IOException;
 import static Platformer.Constant.*;
 
@@ -11,6 +12,7 @@ public class Platformer extends JPanel implements KeyListener{
 
     private Player player;
     private Thread thread;
+    private LevelManager levelManager;
 
     // переменные показывающие, зажата ли кнопка
     private boolean isLeft = false;
@@ -21,6 +23,7 @@ public class Platformer extends JPanel implements KeyListener{
     public Platformer() throws IOException {
         super();
         setFocusable(true);
+        this.levelManager = new LevelManager(); // Инициализация менеджера уровней
         // Создаем игрока в левом нижнем углу
         this.player = new Player("ee86dafa1924dd4c209bcf0a2145ebab.jpg", 0, ScreenHeight - SpriteHeight);
         // Регистрируем слушатель клавиш
@@ -71,6 +74,14 @@ public class Platformer extends JPanel implements KeyListener{
         if (e.getKeyCode()==KeyEvent.VK_DOWN) isDown = false;
     }
 
+    private void drawLevel(Level level) {
+        // Реализация отрисовки уровня?
+        char[][] grid = level.getTiles();
+        for (char[] chars : grid) {
+            System.out.println(chars);
+        }
+    }
+
     public static void main(String[] args) throws IOException {
         var frame = new JFrame();
         var panel = new Platformer();
@@ -84,6 +95,8 @@ public class Platformer extends JPanel implements KeyListener{
         frame.setLocationRelativeTo(null);
         frame.setResizable(false);
         frame.setVisible(true);
+
+        panel.drawLevel(panel.levelManager.getCurrentLevel());
     }
 
     public void animate() {
@@ -101,7 +114,7 @@ public class Platformer extends JPanel implements KeyListener{
             while(true) {
                 platformer.animate();
                 try {
-                    Thread.sleep(5);
+                    Thread.sleep(10);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
