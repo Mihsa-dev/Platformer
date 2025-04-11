@@ -1,11 +1,10 @@
 package Platformer;
 
 public final class Constant {
-    private Constant() {};
+    private Constant() {}
 
     public static final int ScreenWidth = 1200;
     public static final int ScreenHeight = 600;
 
-    public static final int SpriteWidth = 40;
-    public static final int SpriteHeight = 40;
+    public static final int SpriteSize = 60;
 }

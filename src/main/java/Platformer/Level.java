@@ -1,28 +1,51 @@
 package Platformer;
 
+import java.util.ArrayList;
+import java.util.List;
+import static Platformer.Constant.*;
+
 //хранит данные уровня
 public class Level {
-    private char[][] grid;
-    private String name;
+    private final char[][] grid;
+    private final List<GameObj> gameGrid;
 
-    public Level(char[][] tiles, String name) {
+    //position of player
+    private int playerPosX;
+    private int playerPosY;
+
+    public Level(char[][] tiles) {
         this.grid = tiles;
-        this.name = name;
+        gameGrid = new ArrayList<>();
+        getLevelReady();
     }
 
-    public char[][] getTiles() {
+    public char[][] getGrid() {
         return grid;
     }
 
-    public String getName() {
-        return name;
+    public void getLevelReady(){
+        for (int i = 0; i < 10; i++){
+            for (int j = 0; j < 20; j++){
+                if(grid[i][j] == '#'){
+                    gameGrid.add(new Ground("poldlyapidorov.png", j * SpriteSize, i * SpriteSize));
+                }
+                if(grid[i][j] == '@'){
+                    playerPosX = j * 60;
+                    playerPosY = i * 60;
+                }
+            }
+        }
     }
 
-    public int getWidth() {
-        return grid[0].length;
+    public List<GameObj> getGameGrid() {
+        return gameGrid;
     }
 
-    public int getHeight() {
-        return grid.length;
+    public int getPlayerPosX() {
+        return playerPosX;
+    }
+
+    public int getPlayerPosY() {
+        return playerPosY;
     }
 }
