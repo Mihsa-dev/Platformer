@@ -18,8 +18,9 @@ public class LevelLoader {
         char[][] tiles = new char[lines.size()][];
         for (int i = 0; i < lines.size(); i++) {
             tiles[i] = lines.get(i).toCharArray();
+            System.out.println(tiles[i][19]);
         }
-        return new Level(tiles, filename.replace(".txt", ""));
+        return new Level(tiles);
     }
 
     public static List<Level> loadAllLevels() throws IOException {

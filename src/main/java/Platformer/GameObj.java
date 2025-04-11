@@ -10,7 +10,7 @@ public abstract class GameObj {
     private Image sprite; // Спрайт объекта
     private int positionX; // X-координата
     private int positionY; // Y-координата
-
+    protected boolean movable;
 
     public void start() {}
     public void update() {}
@@ -26,7 +26,7 @@ public abstract class GameObj {
     public void setSprite(String spriteNameFile) {
         try{
             this.sprite = ImageIO.read(new File(spriteNameFile))
-                .getScaledInstance(SpriteWidth,SpriteHeight,Image.SCALE_SMOOTH);
+                .getScaledInstance(SpriteSize,SpriteSize,Image.SCALE_SMOOTH);
         }
         catch (IOException e){
             System.err.println("сука, че с файлом:" + e.getMessage());
@@ -39,4 +39,8 @@ public abstract class GameObj {
     public void setPositionX(int x) { positionX = x; }
     public int getPositionY() { return positionY; }
     public void setPositionY(int y) { positionY = y; }
+
+    public boolean isMovable() {
+        return movable;
+    }
 }

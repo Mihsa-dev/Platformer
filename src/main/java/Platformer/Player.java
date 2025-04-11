@@ -10,6 +10,7 @@ public class Player extends GameObj{
 
     public Player(String spriteName, int x, int y) {
         super(spriteName, x, y);
+        movable = true;
     }
 
     @Override
@@ -29,8 +30,8 @@ public class Player extends GameObj{
         if (isDown) newY += getVy();
 
         // Ограничение движения
-        newX = Math.max(0, Math.min(newX, ScreenWidth - SpriteWidth));
-        newY = Math.max(0, Math.min(newY, ScreenHeight - SpriteHeight));
+        newX = Math.max(0, Math.min(newX, ScreenWidth - SpriteSize));
+        newY = Math.max(0, Math.min(newY, ScreenHeight - SpriteSize));
 
         setPositionX(newX);
         setPositionY(newY);

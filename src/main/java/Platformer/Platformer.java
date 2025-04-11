@@ -17,7 +17,7 @@ public class Platformer extends JPanel{
         setFocusable(true);
         this.levelManager = new LevelManager(); // Инициализация менеджера уровней
         // Создаем игрока в левом нижнем углу
-        this.player = new Player("ee86dafa1924dd4c209bcf0a2145ebab.jpg", 0, ScreenHeight - SpriteHeight);
+        this.player = new Player("ee86dafa1924dd4c209bcf0a2145ebab.jpg", levelManager.getCurrentLevel().getPlayerPosX(), levelManager.getCurrentLevel().getPlayerPosY());
 
         // Регистрируем слушатель клавиш
         listener = new InputListener();
@@ -44,11 +44,21 @@ public class Platformer extends JPanel{
                 player.getPositionY(),
                 null
         );
+
+        // draw all objects
+        for (GameObj obj : levelManager.getCurrentLevel().getGameGrid()){
+            g2d.drawImage(
+                    obj.getSprite(),
+                    obj.getPositionX(),
+                    obj.getPositionY(),
+                    null
+            );
+        }
     }
 
     private void drawLevel(Level level) {
         // Реализация отрисовки уровня?
-        char[][] grid = level.getTiles();
+        char[][] grid = level.getGrid();
         for (char[] chars : grid) {
             System.out.println(chars);
         }
@@ -56,11 +66,11 @@ public class Platformer extends JPanel{
 
     public static void main(String[] args) throws IOException {
         var frame = new JFrame();
-        var panel = new Platformer();
+        var platformer = new Platformer();
 
-        panel.setSize(ScreenWidth,ScreenHeight);
-        panel.setPreferredSize(new Dimension(ScreenWidth,ScreenHeight));
-        frame.add(panel);
+        platformer.setSize(ScreenWidth,ScreenHeight);
+        platformer.setPreferredSize(new Dimension(ScreenWidth,ScreenHeight));
+        frame.add(platformer);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         frame.pack();
@@ -68,11 +78,12 @@ public class Platformer extends JPanel{
         frame.setResizable(false);
         frame.setVisible(true);
 
-        panel.drawLevel(panel.levelManager.getCurrentLevel());
+        platformer.drawLevel(platformer.levelManager.getCurrentLevel());
     }
 
     public void animate() {
         player.update();
+
         repaint();
     }
 
