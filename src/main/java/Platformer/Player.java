@@ -11,6 +11,7 @@ public class Player extends GameObj{
     public Player(String spriteName, int x, int y) {
         super(spriteName, x, y);
         movable = true;
+        solid = true;
     }
 
     @Override
@@ -24,14 +25,29 @@ public class Player extends GameObj{
         int newX = getPositionX();
         int newY = getPositionY();
 
-        if (isLeft) newX -= getVx();
-        if (isRight) newX += getVx();
-        if (isUp) newY -= getVy();
-        if (isDown) newY += getVy();
+        isMoved = false;
+
+        if (isLeft){
+            newX -= getVx();
+            isMoved = true;
+        }
+        if (isRight){
+            newX += getVx();
+            isMoved = true;
+        }
+        if (isUp){
+            newY -= getVy();
+            isMoved = true;
+        }
+        if (isDown){
+            newY += getVy();
+            isMoved = true;
+        }
 
         // Ограничение движения
         newX = Math.max(0, Math.min(newX, ScreenWidth - SpriteSize));
         newY = Math.max(0, Math.min(newY, ScreenHeight - SpriteSize));
+
 
         setPositionX(newX);
         setPositionY(newY);
