@@ -3,6 +3,8 @@ package Platformer;
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
+import java.util.Arrays;
+
 import static Platformer.Constant.*;
 
 public class Platformer extends JPanel{
@@ -18,7 +20,7 @@ public class Platformer extends JPanel{
         this.levelManager = new LevelManager(); // Инициализация менеджера уровней
         // Создаем игрока в левом нижнем углу
         this.player = new Player("ee86dafa1924dd4c209bcf0a2145ebab.jpg", levelManager.getCurrentLevel().getPlayerPosX(), levelManager.getCurrentLevel().getPlayerPosY());
-
+        levelManager.getCurrentLevel().addMovables(player);
         // Регистрируем слушатель клавиш
         listener = new InputListener();
         this.addKeyListener(listener);
@@ -37,16 +39,21 @@ public class Platformer extends JPanel{
         g2d.setColor(Color.BLACK);
         g2d.fillRect(0,0,getWidth(),getHeight());
 
-        // Отрисовка спрайта игрока
-        g2d.drawImage(
-                player.getSprite(),
-                player.getPositionX(),
-                player.getPositionY(),
-                null
-        );
 
         // draw all objects
-        for (GameObj obj : levelManager.getCurrentLevel().getGameGrid()){
+        for (int y = 0; y < 10; y++){
+            for (int x = 0; x < 20; x++){
+                GameObj obj = levelManager.getCurrentLevel().getGameGrid()[y][x];
+                g2d.drawImage(
+                        obj.getSprite(),
+                        obj.getPositionX(),
+                        obj.getPositionY(),
+                        null
+                );
+            }
+        }
+        // draw movable objects
+        for (GameObj obj : levelManager.getCurrentLevel().getMovables()){
             g2d.drawImage(
                     obj.getSprite(),
                     obj.getPositionX(),
@@ -54,6 +61,13 @@ public class Platformer extends JPanel{
                     null
             );
         }
+        // Отрисовка спрайта игрока
+        g2d.drawImage(
+                player.getSprite(),
+                player.getPositionX(),
+                player.getPositionY(),
+                null
+        );
     }
 
     private void drawLevel(Level level) {
@@ -84,6 +98,11 @@ public class Platformer extends JPanel{
     public void animate() {
         player.update();
 
+        for (GameObj obj : levelManager.getCurrentLevel().getMovables()){
+            if(obj.isMoved())
+                obj.Collide(levelManager.getCurrentLevel().getGameGrid(),
+                        levelManager.getCurrentLevel().getMovables(), 0);
+        }
         repaint();
     }
 
