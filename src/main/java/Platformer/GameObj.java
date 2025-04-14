@@ -41,7 +41,7 @@ public abstract class GameObj {
     }
 
     public void Collide(GameObj[][] gameGrid, List<GameObj> movables, int k){
-        if(k > 1)
+        if(k > 5)
             return;
 
         if(this.movable){
