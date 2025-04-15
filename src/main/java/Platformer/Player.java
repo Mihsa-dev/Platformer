@@ -16,8 +16,8 @@ public class Player extends GameObj{
 
     @Override
     public void start() {
-        vx = 2;  // Базовая скорость по горизонтали
-        vy = 1;  // Базовая скорость по вертикали
+        vx = 4;  // Базовая скорость по горизонтали
+        vy = 2;  // Базовая скорость по вертикали
     }
 
     @Override
