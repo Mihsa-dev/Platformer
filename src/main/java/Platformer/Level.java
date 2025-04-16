@@ -1,14 +1,13 @@
 package Platformer;
 
 import java.util.ArrayList;
-import java.util.List;
 import static Platformer.Constant.*;
 
 //хранит данные уровня
 public class Level {
     private final char[][] grid;
     private final GameObj[][] gameGrid;
-    private List<GameObj> movables;
+    private ArrayList<GameObj> movables;
     //position of player
     private int playerPosX;
     private int playerPosY;
@@ -50,12 +49,8 @@ public class Level {
         return gameGrid;
     }
 
-    public List<GameObj> getMovables() {
+    public ArrayList<GameObj> getMovables() {
         return movables;
-    }
-
-    public void addMovables(GameObj obj) {
-        this.movables.add(obj);
     }
 
     public int getPlayerPosX() {

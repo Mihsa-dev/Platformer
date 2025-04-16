@@ -3,24 +3,24 @@ package Platformer;
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
-import java.util.Arrays;
 
 import static Platformer.Constant.*;
 
 public class Platformer extends JPanel{
 
-    private Player player;
-    private Thread thread;
-    private LevelManager levelManager;
-    private InputListener listener;
+    private final Player player;
+    private final Thread thread;
+    private final LevelManager levelManager;
+    private final InputListener listener;
 
     public Platformer() throws IOException {
         super();
         setFocusable(true);
         this.levelManager = new LevelManager(); // Инициализация менеджера уровней
         // Создаем игрока в левом нижнем углу
-        this.player = new Player("ee86dafa1924dd4c209bcf0a2145ebab.jpg", levelManager.getCurrentLevel().getPlayerPosX(), levelManager.getCurrentLevel().getPlayerPosY());
-        levelManager.getCurrentLevel().addMovables(player);
+        this.player = new Player("ee86dafa1924dd4c209bcf0a2145ebab.jpg",
+                levelManager.getCurrentLevel().getPlayerPosX(),
+                levelManager.getCurrentLevel().getPlayerPosY());
         // Регистрируем слушатель клавиш
         listener = new InputListener();
         this.addKeyListener(listener);
@@ -98,9 +98,12 @@ public class Platformer extends JPanel{
     public void animate() {
         player.update();
 
+        if (player.isMoved())
+            player.Collide(player, player, levelManager.getCurrentLevel().getGameGrid(),
+                    levelManager.getCurrentLevel().getMovables(), 0);
         for (GameObj obj : levelManager.getCurrentLevel().getMovables()){
-            if(obj.isMoved())
-                obj.Collide(levelManager.getCurrentLevel().getGameGrid(),
+            if(obj.isMovable())
+                obj.Collide(obj, player, levelManager.getCurrentLevel().getGameGrid(),
                         levelManager.getCurrentLevel().getMovables(), 0);
         }
         repaint();
