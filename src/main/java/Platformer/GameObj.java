@@ -47,8 +47,10 @@ public abstract class GameObj {
                 if (pushColl(player))
                     player.Collide(this, player, gameGrid, movables, k+1);
             }
+            // область проверки коллизий для всех
             int min_x = 0;
             int max_x = 2;
+            // у игрока больше область проверки коллизий
             if (this == player){
                 min_x = -2;
                 max_x = 3;
@@ -63,7 +65,16 @@ public abstract class GameObj {
 
                     GameObj obj = gameGrid[yy][xx];
 
-                    if (obj.isSolid()){
+                    boolean col = (getPositionX() < (obj.getPositionX() + SpriteSize) &&
+                            getPositionX() > obj.getPositionX()) ||
+                            ((getPositionX() + SpriteSize) > obj.getPositionX() &&
+                                    getPositionX() < obj.getPositionX()) ||
+                            (getPositionY() < (obj.getPositionY() + SpriteSize) &&
+                                    getPositionY() > obj.getPositionY()) ||
+                            ((getPositionY() + SpriteSize) > obj.getPositionY() &&
+                                    getPositionY() < obj.getPositionY());
+
+                    if (obj.isSolid() && col){
                         obj.Collide(this, player, gameGrid, movables, k+1);
                     }
                 }
