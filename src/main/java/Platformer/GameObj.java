@@ -39,20 +39,13 @@ public abstract class GameObj {
     }
 
     public void Collide(GameObj prev, Player player, GameObj[][] gameGrid, ArrayList<GameObj> movables, int k){
-        if(k > 3)
+        if(k > 10)
             return;
-        if (this.movable && this!=player){
-            //System.out.println("///");
-            //System.out.println(prev != player);
-            //System.out.println(this);
-            //System.out.println("///");
-        }
 
         if(this.movable){
             if (prev != player || this!=player){
-
-                pushColl(player);
-                player.Collide(this, player, gameGrid, movables, k+1);
+                if (pushColl(player))
+                    player.Collide(this, player, gameGrid, movables, k+1);
             }
             int min_x = 0;
             int max_x = 2;
@@ -77,22 +70,20 @@ public abstract class GameObj {
             }
         }
         else {
-            pushColl(player);
-            player.Collide(this, player, gameGrid, movables, k+1);
+            if (pushColl(player))
+                player.Collide(this, player, gameGrid, movables, k+1);
         }
 
-        for (GameObj obj : movables){
-            if(obj != this){
-
-                pushColl(obj);
-
-                obj.Collide(this, player, gameGrid, movables, k+1);
+        for (GameObj obj : movables) {
+            if(obj != this) {
+                if (pushColl(obj))
+                    obj.Collide(this, player, gameGrid, movables, k+1);
             }
         }
 
     }
 
-    private void pushColl(GameObj obj){
+    private boolean pushColl(GameObj obj){
         boolean xxl = getPositionX() < (obj.getPositionX() + SpriteSize) && getPositionX() > obj.getPositionX();
         boolean xxr = (getPositionX() + SpriteSize) > obj.getPositionX() && getPositionX() < obj.getPositionX();
         boolean yyu = getPositionY() < (obj.getPositionY() + SpriteSize) && getPositionY() > obj.getPositionY();
@@ -105,21 +96,25 @@ public abstract class GameObj {
             if (y_off < x_off){
                 if (xxr){
                     obj.setPositionX(getPositionX() + SpriteSize);
+                    return true;
                 }
                 else if (xxl){
                     obj.setPositionX(getPositionX() - SpriteSize);
+                    return true;
                 }
             }
             else {
                 if (yyu) {
                     obj.setPositionY(getPositionY() - SpriteSize);
+                    return true;
                 }
                 else if (yyd){
                     obj.setPositionY(getPositionY() + SpriteSize);
+                    return true;
                 }
             }
         }
-
+        return false;
     }
 
     // Геттеры и сеттеры
