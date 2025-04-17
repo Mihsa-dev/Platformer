@@ -9,12 +9,14 @@ import java.util.ArrayList;
 import static Platformer.Constant.*;
 
 public abstract class GameObj {
-    private Image sprite; // Спрайт объекта
-    private int positionX; // X-координата
-    private int positionY; // Y-координата
-    protected boolean movable;
-    protected boolean solid;
-    protected boolean isMoved = false;
+    private Image sprite;               // Спрайт объекта
+    private int positionX;              // X-координата
+    private int positionY;              // Y-координата
+    protected boolean movable;          // можно ли двигать объект
+    protected boolean solid;            // пустой ли объект
+    protected boolean isMoved = false;  // сдвинулся ли объект
+    private final Vector2D velocity;           // скорость объекта
+    private float mass;                 // масса объекта
 
     public void start() {}
     public void update() {}
@@ -24,6 +26,7 @@ public abstract class GameObj {
         this.setPositionX(x);       // Устанавливаем позицию X
         this.setPositionY(y);       // Устанавливаем позицию Y
         start();                    // Инициализация
+        velocity = new Vector2D(0, 0);
     }
 
     // Загрузка и масштабирование спрайта
@@ -38,6 +41,7 @@ public abstract class GameObj {
 
     }
 
+    // Метод для вызова проверки на пересечения с окружающими объектами
     public void Collide(GameObj prev, Player player, GameObj[][] gameGrid, ArrayList<GameObj> movables, int k){
         if(k > 10)
             return;
@@ -94,6 +98,7 @@ public abstract class GameObj {
 
     }
 
+    // Функция для выталкивания объекта, если столкновение произошло
     private boolean pushColl(GameObj obj){
         boolean xxl = getPositionX() < (obj.getPositionX() + SpriteSize) && getPositionX() > obj.getPositionX();
         boolean xxr = (getPositionX() + SpriteSize) > obj.getPositionX() && getPositionX() < obj.getPositionX();
@@ -128,6 +133,10 @@ public abstract class GameObj {
         return false;
     }
 
+    public void addForce(Vector2D force) {
+        this.velocity.add(force);
+    }
+
     // Геттеры и сеттеры
     public Image getSprite() { return sprite; }
     public int getPositionX() { return positionX; }
@@ -138,12 +147,26 @@ public abstract class GameObj {
     public boolean isMovable() {
         return movable;
     }
-
     public boolean isMoved() {
         return isMoved;
     }
-
     public boolean isSolid() {
         return solid;
+    }
+
+    public Vector2D getVelocity() {
+        return velocity;
+    }
+
+    public void setVelocity(Vector2D vel) {
+        this.velocity.setX(vel.getX());
+        this.velocity.setY(vel.getY());
+    }
+
+    public float getMass() {
+        return mass;
+    }
+    public void setMass(int mass) {
+        this.mass = mass;
     }
 }
