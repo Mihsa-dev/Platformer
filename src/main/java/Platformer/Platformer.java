@@ -17,7 +17,6 @@ public class Platformer extends JPanel{
         super();
         setFocusable(true);
         this.levelManager = new LevelManager(); // Инициализация менеджера уровней
-        // Создаем игрока в левом нижнем углу
         this.player = new Player("ee86dafa1924dd4c209bcf0a2145ebab.jpg",
                 levelManager.getCurrentLevel().getPlayerPosX(),
                 levelManager.getCurrentLevel().getPlayerPosY());
@@ -40,7 +39,7 @@ public class Platformer extends JPanel{
         g2d.fillRect(0,0,getWidth(),getHeight());
 
 
-        // draw all objects
+        // draw all not movable objects
         for (int y = 0; y < 10; y++){
             for (int x = 0; x < 20; x++){
                 GameObj obj = levelManager.getCurrentLevel().getGameGrid()[y][x];
@@ -70,17 +69,9 @@ public class Platformer extends JPanel{
         );
     }
 
-    private void drawLevel(Level level) {
-        // Реализация отрисовки уровня?
-        char[][] grid = level.getGrid();
-        for (char[] chars : grid) {
-            System.out.println(chars);
-        }
-    }
-
     public static void main(String[] args) throws IOException {
-        var frame = new JFrame();
-        var platformer = new Platformer();
+        JFrame frame = new JFrame();
+        Platformer platformer = new Platformer();
 
         platformer.setSize(ScreenWidth,ScreenHeight);
         platformer.setPreferredSize(new Dimension(ScreenWidth,ScreenHeight));
@@ -91,8 +82,6 @@ public class Platformer extends JPanel{
         frame.setLocationRelativeTo(null);
         frame.setResizable(false);
         frame.setVisible(true);
-
-        platformer.drawLevel(platformer.levelManager.getCurrentLevel());
     }
 
     public void animate() {

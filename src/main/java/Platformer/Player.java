@@ -28,26 +28,27 @@ public class Player extends GameObj{
         isMoved = false;
 
         if (isLeft){
-            newX -= getVx();
+            addForce(-getVx(), 0);
             isMoved = true;
         }
         if (isRight){
-            newX += getVx();
+            addForce(getVx(), 0);
             isMoved = true;
         }
         if (isUp){
-            newY -= getVy();
+            addForce(0, -getVy());
             isMoved = true;
         }
         if (isDown){
-            newY += getVy();
+            addForce(0, getVy());
             isMoved = true;
         }
 
-        // Ограничение движения
-        newX = Math.max(0, Math.min(newX, ScreenWidth - SpriteSize));
-        newY = Math.max(0, Math.min(newY, ScreenHeight - SpriteSize));
+        newX += (int)getVelocity().getX();
+        newY += (int)getVelocity().getY();
 
+        applyFriction(0.7f, 0.1f);
+        if (getVelocity().len() != 0) isMoved = true;
 
         setPositionX(newX);
         setPositionY(newY);

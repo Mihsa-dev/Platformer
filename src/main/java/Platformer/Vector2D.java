@@ -25,14 +25,16 @@ public class Vector2D {
         this.y = y;
     }
 
-    public void add(Vector2D vector){
+    public Vector2D add(Vector2D vector){
         this.setX(this.getX() + vector.getX());
         this.setY(this.getY() + vector.getY());
+        return this;
     }
 
-    public void multiply(float a){
+    public Vector2D multiply(float a){
         this.setX(this.getX() * a);
         this.setY(this.getY() * a);
+        return this;
     }
 
     public float len(){

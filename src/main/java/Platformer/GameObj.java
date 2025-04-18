@@ -15,7 +15,7 @@ public abstract class GameObj {
     protected boolean movable;          // можно ли двигать объект
     protected boolean solid;            // пустой ли объект
     protected boolean isMoved = false;  // сдвинулся ли объект
-    private final Vector2D velocity;           // скорость объекта
+    private final Vector2D velocity;    // скорость объекта
     private float mass;                 // масса объекта
 
     public void start() {}
@@ -69,6 +69,7 @@ public abstract class GameObj {
 
                     GameObj obj = gameGrid[yy][xx];
 
+                    // есть ли коллизия
                     boolean col = (getPositionX() < (obj.getPositionX() + SpriteSize) &&
                             getPositionX() > obj.getPositionX()) ||
                             ((getPositionX() + SpriteSize) > obj.getPositionX() &&
@@ -108,33 +109,52 @@ public abstract class GameObj {
         int x_off = Math.abs(obj.getPositionX() - getPositionX());
         int y_off = Math.abs(obj.getPositionY() - getPositionY());
 
-        if (x_off != y_off) {
-            if (y_off < x_off){
-                if (xxr){
-                    obj.setPositionX(getPositionX() + SpriteSize);
-                    return true;
-                }
-                else if (xxl){
-                    obj.setPositionX(getPositionX() - SpriteSize);
-                    return true;
-                }
+        //Vector2D result = this.velocity.multiply(this.mass).add(obj.velocity.multiply(obj.mass)).multiply(1/(this.mass + obj.mass));
+        if (y_off < x_off){
+            if (xxr){
+                obj.setPositionX(getPositionX() + SpriteSize);
+
+                //obj.addForce(result.getX(),0);
+
+                return true;
             }
-            else {
-                if (yyu) {
-                    obj.setPositionY(getPositionY() - SpriteSize);
-                    return true;
-                }
-                else if (yyd){
-                    obj.setPositionY(getPositionY() + SpriteSize);
-                    return true;
-                }
+            else if (xxl){
+                obj.setPositionX(getPositionX() - SpriteSize);
+                return true;
+            }
+        }
+        else if (x_off < y_off){
+            if (yyu) {
+                obj.setPositionY(getPositionY() - SpriteSize);
+                return true;
+            }
+            else if (yyd){
+                obj.setPositionY(getPositionY() + SpriteSize);
+                return true;
             }
         }
         return false;
     }
 
     public void addForce(Vector2D force) {
+
         this.velocity.add(force);
+    }
+
+    public void addForce(float dx, float dy) {
+        setVelocity(new Vector2D(getVelocity().getX() + dx, getVelocity().getY() + dy));
+    }
+
+    public void updater(){
+
+    }
+
+    // метод для сопротивления среды ускорению
+    public void applyFriction(float frictionFactor, float minSpeedThreshold) {
+        setVelocity(getVelocity().multiply(frictionFactor));
+        if (Math.abs(getVelocity().getX()) < minSpeedThreshold) getVelocity().setX(0);
+        if (Math.abs(getVelocity().getY()) < minSpeedThreshold) getVelocity().setY(0);
+        setVelocity(getVelocity());
     }
 
     // Геттеры и сеттеры
