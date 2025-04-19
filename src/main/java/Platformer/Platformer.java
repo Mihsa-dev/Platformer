@@ -85,7 +85,10 @@ public class Platformer extends JPanel{
     }
 
     public void animate() {
-        player.update();
+        player.updater();
+        for (GameObj obj : levelManager.getCurrentLevel().getMovables()){
+            obj.updater();
+        }
 
         if (player.isMoved())
             player.Collide(player, player, levelManager.getCurrentLevel().getGameGrid(),

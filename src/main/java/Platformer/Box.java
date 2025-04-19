@@ -6,4 +6,8 @@ public class Box extends GameObj{
         movable = true;
         solid = true;
     }
+    @Override
+    public  void start(){
+        useGravity = true;
+    }
 }
