@@ -1,12 +1,13 @@
 package Platformer;
 
-import static Platformer.Constant.*;
+//import static Platformer.Constant.*;
 import static Platformer.InputListener.*;
 
 public class Player extends GameObj{
 
     private int vx;  // Скорость по X
-    private int vy;  // Скорость по Y
+    private int vy;  // Сила прыжка
+    private int timer;
 
     public Player(String spriteName, int x, int y) {
         super(spriteName, x, y);
@@ -17,44 +18,32 @@ public class Player extends GameObj{
     @Override
     public void start() {
         vx = 4;  // Базовая скорость по горизонтали
-        vy = 2;  // Базовая скорость по вертикали
+        vy = 40;  // Базовая скорость по вертикали
+        useGravity = true;
     }
 
     @Override
     public void update() {
-        int newX = getPositionX();
-        int newY = getPositionY();
 
-        isMoved = false;
+        timer -= 1;
 
         if (isLeft){
-            addForce(-getVx(), 0);
-            isMoved = true;
+            addForce(-vx, 0);
         }
         if (isRight){
-            addForce(getVx(), 0);
-            isMoved = true;
+            addForce(vx, 0);
         }
-        if (isUp){
-            addForce(0, -getVy());
-            isMoved = true;
+        if (isUp && timer < 1){
+            this.setVelocity( new Vector2D(this.getVelocity().getX(), 0));
+            addForce(0, -vy);
+            timer = 50;
         }
-        if (isDown){
-            addForce(0, getVy());
-            isMoved = true;
-        }
+//        if (isDown){
+//            addForce(0, getVy());
+//            isMoved = true;
+//        }
 
-        newX += (int)getVelocity().getX();
-        newY += (int)getVelocity().getY();
 
-        applyFriction(0.7f, 0.1f);
-        if (getVelocity().len() != 0) isMoved = true;
-
-        setPositionX(newX);
-        setPositionY(newY);
     }
 
-    // Геттеры скорости
-    public int getVx() { return vx; }
-    public int getVy() { return vy; }
 }

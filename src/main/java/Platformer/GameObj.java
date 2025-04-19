@@ -9,14 +9,15 @@ import java.util.ArrayList;
 import static Platformer.Constant.*;
 
 public abstract class GameObj {
-    private Image sprite;               // Спрайт объекта
-    private int positionX;              // X-координата
-    private int positionY;              // Y-координата
-    protected boolean movable;          // можно ли двигать объект
-    protected boolean solid;            // пустой ли объект
-    protected boolean isMoved = false;  // сдвинулся ли объект
-    private final Vector2D velocity;    // скорость объекта
-    private float mass;                 // масса объекта
+    private Image sprite;                   // Спрайт объекта
+    private int positionX;                  // X-координата
+    private int positionY;                  // Y-координата
+    protected boolean movable;              // можно ли двигать объект
+    protected boolean solid;                // пустой ли объект
+    protected boolean isMoved = false;      // сдвинулся ли объект
+    private final Vector2D velocity;        // скорость объекта
+    private final float mass;                     // масса объекта
+    protected  boolean useGravity = true;   // использует ли объект гравитацию
 
     public void start() {}
     public void update() {}
@@ -27,6 +28,7 @@ public abstract class GameObj {
         this.setPositionY(y);       // Устанавливаем позицию Y
         start();                    // Инициализация
         velocity = new Vector2D(0, 0);
+        mass = 1;
     }
 
     // Загрузка и масштабирование спрайта
@@ -48,8 +50,10 @@ public abstract class GameObj {
 
         if(this.movable){
             if (prev != player || this!=player){
-                if (pushColl(player))
+                if (pushColl(prev, player)){
                     player.Collide(this, player, gameGrid, movables, k+1);
+                }
+
             }
             // область проверки коллизий для всех
             int min_x = 0;
@@ -86,21 +90,24 @@ public abstract class GameObj {
             }
         }
         else {
-            if (pushColl(player))
+            if (pushColl(prev, player)){
                 player.Collide(this, player, gameGrid, movables, k+1);
+            }
         }
 
         for (GameObj obj : movables) {
             if(obj != this) {
-                if (pushColl(obj))
+                if (pushColl(prev, obj)){
                     obj.Collide(this, player, gameGrid, movables, k+1);
+                }
+
             }
         }
 
     }
 
     // Функция для выталкивания объекта, если столкновение произошло
-    private boolean pushColl(GameObj obj){
+    private boolean pushColl(GameObj prev, GameObj obj){
         boolean xxl = getPositionX() < (obj.getPositionX() + SpriteSize) && getPositionX() > obj.getPositionX();
         boolean xxr = (getPositionX() + SpriteSize) > obj.getPositionX() && getPositionX() < obj.getPositionX();
         boolean yyu = getPositionY() < (obj.getPositionY() + SpriteSize) && getPositionY() > obj.getPositionY();
@@ -109,27 +116,49 @@ public abstract class GameObj {
         int x_off = Math.abs(obj.getPositionX() - getPositionX());
         int y_off = Math.abs(obj.getPositionY() - getPositionY());
 
-        //Vector2D result = this.velocity.multiply(this.mass).add(obj.velocity.multiply(obj.mass)).multiply(1/(this.mass + obj.mass));
+        Vector2D this_vel = this.velocity.clone();
+        Vector2D obj_vel = obj.getVelocity().clone();
+        Vector2D result;
+        if (this.isMovable()){
+            result = this_vel.multiply(this.mass).add(obj_vel.multiply(obj.mass)).multiply(1/(this.mass + obj.mass));
+            if (!prev.isMovable()) {
+                result = obj_vel.multiply(-1);
+            }
+        }
+        else {
+            result = obj_vel.multiply(-1);
+        }
         if (y_off < x_off){
             if (xxr){
                 obj.setPositionX(getPositionX() + SpriteSize);
 
-                //obj.addForce(result.getX(),0);
+                if (this.movable)
+                    obj.addForce(result);
 
                 return true;
             }
             else if (xxl){
                 obj.setPositionX(getPositionX() - SpriteSize);
+
+                if (this.movable)
+                    obj.addForce(result);
+
                 return true;
             }
         }
         else if (x_off < y_off){
             if (yyu) {
                 obj.setPositionY(getPositionY() - SpriteSize);
+
+                obj.addForce(result);
+
                 return true;
             }
             else if (yyd){
                 obj.setPositionY(getPositionY() + SpriteSize);
+
+                obj.addForce(result);
+
                 return true;
             }
         }
@@ -147,14 +176,32 @@ public abstract class GameObj {
 
     public void updater(){
 
+        isMoved = false;
+
+        update();
+
+        if(this.movable && this.useGravity){
+            addForce(0, 1);
+        }
+
+        applyFrictionX(0.6f);
+
+        Threshold(0.01f);
+
+        setPositionX(getPositionX() + (int)getVelocity().getX());
+        setPositionY(getPositionY() + (int)getVelocity().getY());
+
+        if (getVelocity().len() != 0) isMoved = true;
     }
 
     // метод для сопротивления среды ускорению
-    public void applyFriction(float frictionFactor, float minSpeedThreshold) {
-        setVelocity(getVelocity().multiply(frictionFactor));
+    public void applyFrictionX(float frictionFactor) {
+        setVelocity(getVelocity().getX() * frictionFactor, getVelocity().getY() * 0.9f);
+
+    }
+    public void Threshold(float minSpeedThreshold) {
         if (Math.abs(getVelocity().getX()) < minSpeedThreshold) getVelocity().setX(0);
         if (Math.abs(getVelocity().getY()) < minSpeedThreshold) getVelocity().setY(0);
-        setVelocity(getVelocity());
     }
 
     // Геттеры и сеттеры
@@ -183,10 +230,8 @@ public abstract class GameObj {
         this.velocity.setY(vel.getY());
     }
 
-    public float getMass() {
-        return mass;
-    }
-    public void setMass(int mass) {
-        this.mass = mass;
+    public void setVelocity(float x, float y) {
+        this.velocity.setX(x);
+        this.velocity.setY(y);
     }
 }

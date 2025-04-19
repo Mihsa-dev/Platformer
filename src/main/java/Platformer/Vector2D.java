@@ -45,4 +45,9 @@ public class Vector2D {
         this.setX(this.getX() / this.len());
         this.setY(this.getY() / this.len());
     }
+
+    @Override
+    public Vector2D clone() {
+        return new Vector2D(this.getX(), this.getY());
+    }
 }
