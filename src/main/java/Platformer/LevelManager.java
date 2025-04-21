@@ -5,7 +5,7 @@ import java.util.List;
 
 //управляет уровнями
 public class LevelManager {
-    private List<Level> levels;
+    protected List<Level> levels;
     private int currentLevelIndex;
 
     public LevelManager() throws IOException {
@@ -13,10 +13,14 @@ public class LevelManager {
         this.currentLevelIndex = 0;
     }
 
-    public void setСurrentLevelIndex(int index) {
+    public void setCurrentLevelIndex(int index) {
         if (index >= 0 && index < levels.size()) {
             currentLevelIndex = index;
         }
+    }
+
+    public int getCurrentLevelIndex() {
+        return currentLevelIndex;
     }
 
     public Level getCurrentLevel() {

@@ -20,7 +20,7 @@ public class Player extends GameObj{
     @Override
     public void start() {
         vx = 4;  // Базовая скорость по горизонтали
-        vy = 20;  // Базовая скорость по вертикали
+        vy = 23;  // Базовая скорость по вертикали
         useGravity = true;
     }
 
