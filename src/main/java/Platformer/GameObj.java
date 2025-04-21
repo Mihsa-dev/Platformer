@@ -119,20 +119,10 @@ public abstract class GameObj {
         Vector2D this_vel = this.velocity.clone();
         Vector2D obj_vel = obj.getVelocity().clone();
         Vector2D result = new Vector2D(0,0);
-//        if (this.isMovable()){
-//            result = this_vel.multiply(this.mass).add(obj_vel.multiply(obj.mass)).multiply(1/(this.mass + obj.mass));
-//            if (!prev.isMovable()) {
-//                result = obj_vel.multiply(-1);
-//            }
-//        }
-//        else {
-//            result = obj_vel.multiply(-1);
-//        }
+
         if (this.isMovable() && obj.isMovable()){
             result = obj_vel.multiply(-0.5f);
         }
-
-
 
         if (obj.isMovable() ){
             if (y_off < x_off){

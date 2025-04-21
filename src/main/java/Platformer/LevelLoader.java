@@ -25,6 +25,7 @@ public class LevelLoader {
     public static List<Level> loadAllLevels() throws IOException {
         List<Level> levels = new ArrayList<>();
         levels.add(loadLevel("level_1.txt"));
+        levels.add(loadLevel("level_2.txt"));
         return levels;
     }
 }

@@ -11,6 +11,9 @@ public class Level {
     //position of player
     private int playerPosX;
     private int playerPosY;
+    //position of levelEnd
+    private int levelEndPosInGridRow;
+    private int levelEndPosInGridColumn;
 
     public Level(char[][] tiles) {
         this.grid = tiles;
@@ -29,12 +32,17 @@ public class Level {
                 if(grid[i][j] == '#'){
                     gameGrid[i][j] = new Ground("poldlyapidorov.png", j * SpriteSize, i * SpriteSize);
                 }
+                else if(grid[i][j] == '0'){
+                    gameGrid[i][j] = new levelEnd("scp_173_noBackground.png", j * SpriteSize, i * SpriteSize);
+                    levelEndPosInGridRow = i;
+                    levelEndPosInGridColumn = j;
+                }
                 else if(grid[i][j] == '@'){
-                    playerPosX = j * 60;
-                    playerPosY = i * 60;
+                    playerPosX = j * SpriteSize;
+                    playerPosY = i * SpriteSize;
                     gameGrid[i][j] = new EmptyObj("empty.png", j * SpriteSize, i * SpriteSize);
                 }
-                else  if(grid[i][j] == 'b'){
+                else if(grid[i][j] == 'b'){
                     movables.add(new Box("box.png", j * SpriteSize, i * SpriteSize));
                     gameGrid[i][j] = new EmptyObj("empty.png", j * SpriteSize, i * SpriteSize);
                 }
@@ -53,11 +61,11 @@ public class Level {
         return movables;
     }
 
-    public int getPlayerPosX() {
-        return playerPosX;
-    }
+    public int getPlayerPosX() {return playerPosX;}
 
-    public int getPlayerPosY() {
-        return playerPosY;
-    }
+    public int getPlayerPosY() {return playerPosY;}
+
+    public int getLevelEndPosInGridRow() {return levelEndPosInGridRow;}
+
+    public int getLevelEndPosInGridColumn() {return levelEndPosInGridColumn;}
 }
