@@ -7,7 +7,9 @@ public class Player extends GameObj{
 
     private int vx;  // Скорость по X
     private int vy;  // Сила прыжка
-    private int timer;
+    private boolean canJump;
+    private int coyoteTime;
+    private int jumpBuffer;
 
     public Player(String spriteName, int x, int y) {
         super(spriteName, x, y);
@@ -18,14 +20,16 @@ public class Player extends GameObj{
     @Override
     public void start() {
         vx = 4;  // Базовая скорость по горизонтали
-        vy = 40;  // Базовая скорость по вертикали
+        vy = 20;  // Базовая скорость по вертикали
         useGravity = true;
     }
 
     @Override
     public void update() {
 
-        timer -= 1;
+        if (coyoteTime > -1) coyoteTime -= 1;
+
+        if (jumpBuffer > -1) jumpBuffer -= 1;
 
         if (isLeft){
             addForce(-vx, 0);
@@ -33,17 +37,20 @@ public class Player extends GameObj{
         if (isRight){
             addForce(vx, 0);
         }
-        if (isUp && timer < 1){
+        if (isUp){
+            jumpBuffer = 5;
+        }
+
+        if (jumpBuffer > 0 && canJump && coyoteTime > 0) {
             this.setVelocity( new Vector2D(this.getVelocity().getX(), 0));
             addForce(0, -vy);
-            timer = 50;
+            canJump = false;
+            jumpBuffer = 0;
         }
-//        if (isDown){
-//            addForce(0, getVy());
-//            isMoved = true;
-//        }
-
-
     }
 
+    public void allowJump(){
+        this.canJump = true;
+        coyoteTime = 5;
+    }
 }

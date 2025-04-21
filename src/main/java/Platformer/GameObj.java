@@ -17,7 +17,7 @@ public abstract class GameObj {
     protected boolean isMoved = false;      // сдвинулся ли объект
     private final Vector2D velocity;        // скорость объекта
     private final float mass;                     // масса объекта
-    protected  boolean useGravity = true;   // использует ли объект гравитацию
+    protected  boolean useGravity = false;   // использует ли объект гравитацию
 
     public void start() {}
     public void update() {}
@@ -118,49 +118,66 @@ public abstract class GameObj {
 
         Vector2D this_vel = this.velocity.clone();
         Vector2D obj_vel = obj.getVelocity().clone();
-        Vector2D result;
-        if (this.isMovable()){
-            result = this_vel.multiply(this.mass).add(obj_vel.multiply(obj.mass)).multiply(1/(this.mass + obj.mass));
-            if (!prev.isMovable()) {
-                result = obj_vel.multiply(-1);
+        Vector2D result = new Vector2D(0,0);
+//        if (this.isMovable()){
+//            result = this_vel.multiply(this.mass).add(obj_vel.multiply(obj.mass)).multiply(1/(this.mass + obj.mass));
+//            if (!prev.isMovable()) {
+//                result = obj_vel.multiply(-1);
+//            }
+//        }
+//        else {
+//            result = obj_vel.multiply(-1);
+//        }
+        if (this.isMovable() && obj.isMovable()){
+            result = obj_vel.multiply(-0.5f);
+        }
+
+
+
+        if (obj.isMovable() ){
+            if (y_off < x_off){
+                return pushX(xxr, xxl, obj, new Vector2D(result.getX(), 0));
             }
         }
-        else {
-            result = obj_vel.multiply(-1);
-        }
+
         if (y_off < x_off){
-            if (xxr){
-                obj.setPositionX(getPositionX() + SpriteSize);
-
-                if (this.movable)
-                    obj.addForce(result);
-
-                return true;
-            }
-            else if (xxl){
-                obj.setPositionX(getPositionX() - SpriteSize);
-
-                if (this.movable)
-                    obj.addForce(result);
-
-                return true;
-            }
+            return pushX(xxr, xxl, obj, result);
         }
         else if (x_off < y_off){
-            if (yyu) {
-                obj.setPositionY(getPositionY() - SpriteSize);
-
+            return pushY(yyu, yyd, obj, result);
+        }
+        return false;
+    }
+    private boolean pushX(boolean xxr, boolean xxl, GameObj obj, Vector2D result){
+        if (xxr){
+            obj.setPositionX(getPositionX() + SpriteSize);
+            if (this.movable)
                 obj.addForce(result);
-
-                return true;
-            }
-            else if (yyd){
-                obj.setPositionY(getPositionY() + SpriteSize);
-
+            return true;
+        }
+        else if (xxl){
+            obj.setPositionX(getPositionX() - SpriteSize);
+            if (this.movable)
                 obj.addForce(result);
+            return true;
+        }
+        return false;
+    }
+    private boolean pushY(boolean yyu, boolean yyd, GameObj obj, Vector2D result){
+        if (yyu) {
+            obj.setPositionY(getPositionY() - SpriteSize);
+            obj.addForce(result.getX(), -obj.velocity.getY());
 
-                return true;
+            if (obj instanceof Player){
+                ((Player) obj).allowJump();
             }
+
+            return true;
+        }
+        else if (yyd){
+            obj.setPositionY(getPositionY() + SpriteSize);
+            obj.addForce(result);
+            return true;
         }
         return false;
     }
@@ -175,22 +192,16 @@ public abstract class GameObj {
     }
 
     public void updater(){
-
         isMoved = false;
-
         update();
 
         if(this.movable && this.useGravity){
             addForce(0, 1);
         }
-
-        applyFrictionX(0.6f);
-
+        applyFrictionX(0.7f);
         Threshold(0.01f);
-
         setPositionX(getPositionX() + (int)getVelocity().getX());
         setPositionY(getPositionY() + (int)getVelocity().getY());
-
         if (getVelocity().len() != 0) isMoved = true;
     }
 
