@@ -20,17 +20,7 @@ public class Platformer extends JPanel{
         this.player = new Player("ee86dafa1924dd4c209bcf0a2145ebab.jpg",
                 levelManager.getCurrentLevel().getPlayerPosX(),
                 levelManager.getCurrentLevel().getPlayerPosY());
-        //передаем levelManager переходу на следующий уровень
-        if (levelManager.getCurrentLevel()
-                .getGameGrid()
-                    [levelManager.getCurrentLevel().getLevelEndPosInGridRow()]
-                    [levelManager.getCurrentLevel().getLevelEndPosInGridColumn()]
-                instanceof levelEnd){
-                    ((levelEnd)levelManager.getCurrentLevel().getGameGrid()
-                                [levelManager.getCurrentLevel().getLevelEndPosInGridRow()]
-                                [levelManager.getCurrentLevel().getLevelEndPosInGridColumn()])
-                    .setLevelManager(levelManager);
-                }
+
         // Регистрируем слушатель клавиш
         listener = new InputListener();
         this.addKeyListener(listener);
@@ -83,6 +73,7 @@ public class Platformer extends JPanel{
     public static void main(String[] args) throws IOException {
         JFrame frame = new JFrame();
         Platformer platformer = new Platformer();
+        GameObj.levelManager = platformer.levelManager;
 
         platformer.setSize(ScreenWidth,ScreenHeight);
         platformer.setPreferredSize(new Dimension(ScreenWidth,ScreenHeight));

@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import static Platformer.Constant.*;
 
 public abstract class GameObj {
+    public static LevelManager levelManager;
+
     private Image sprite;                   // Спрайт объекта
     private int positionX;                  // X-координата
     private int positionY;                  // Y-координата
@@ -45,8 +47,7 @@ public abstract class GameObj {
 
     // Метод для вызова проверки на пересечения с окружающими объектами
     public void Collide(GameObj prev, Player player, GameObj[][] gameGrid, ArrayList<GameObj> movables, int k){
-        if(k > 10)
-            return;
+        if(k > 10) return;
 
         if(this.movable){
             if (prev != player || this!=player){
@@ -55,14 +56,9 @@ public abstract class GameObj {
                 }
 
             }
-            // область проверки коллизий для всех
+            // область проверки коллизий с окружающими моделями
             int min_x = 0;
             int max_x = 2;
-            // у игрока больше область проверки коллизий
-            if (this == player){
-                min_x = -2;
-                max_x = 3;
-            }
             for (int i = min_x; i < max_x; i++){
                 for (int j = min_x; j < max_x; j++){
                     int xx = (this.getPositionX() / SpriteSize) + i;
@@ -73,7 +69,7 @@ public abstract class GameObj {
 
                     GameObj obj = gameGrid[yy][xx];
 
-                    // есть ли коллизия
+                    // проверка, есть ли коллизия
                     boolean col = (getPositionX() < (obj.getPositionX() + SpriteSize) &&
                             getPositionX() > obj.getPositionX()) ||
                             ((getPositionX() + SpriteSize) > obj.getPositionX() &&
@@ -103,11 +99,10 @@ public abstract class GameObj {
 
             }
         }
-
     }
 
     // Функция для выталкивания объекта, если столкновение произошло
-    private boolean pushColl(GameObj prev, GameObj obj){
+    protected boolean pushColl(GameObj prev, GameObj obj){
         boolean xxl = getPositionX() < (obj.getPositionX() + SpriteSize) && getPositionX() > obj.getPositionX();
         boolean xxr = (getPositionX() + SpriteSize) > obj.getPositionX() && getPositionX() < obj.getPositionX();
         boolean yyu = getPositionY() < (obj.getPositionY() + SpriteSize) && getPositionY() > obj.getPositionY();

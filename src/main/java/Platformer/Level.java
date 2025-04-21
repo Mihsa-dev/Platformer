@@ -32,6 +32,9 @@ public class Level {
                 if(grid[i][j] == '#'){
                     gameGrid[i][j] = new Ground("poldlyapidorov.png", j * SpriteSize, i * SpriteSize);
                 }
+                else if(grid[i][j] == '^'){
+                    gameGrid[i][j] = new Spikes("chleni.png", j * SpriteSize, i * SpriteSize);
+                }
                 else if(grid[i][j] == '0'){
                     gameGrid[i][j] = new levelEnd("scp_173_noBackground.png", j * SpriteSize, i * SpriteSize);
                     levelEndPosInGridRow = i;

@@ -22,6 +22,11 @@ public class LevelLoader {
         return new Level(tiles);
     }
 
+    public static Level loadLevelNumber(int number) throws IOException{
+        String filename = "level_" + String.valueOf(number) + ".txt";
+        return loadLevel(filename);
+    }
+
     public static List<Level> loadAllLevels() throws IOException {
         List<Level> levels = new ArrayList<>();
         levels.add(loadLevel("level_1.txt"));
