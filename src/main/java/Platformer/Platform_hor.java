@@ -12,6 +12,7 @@ public class Platform_hor extends GameObj{
         super(spriteName, x, y);
         movable = true;
         solid = true;
+        pushable = false;
     }
 
     @Override
@@ -23,7 +24,8 @@ public class Platform_hor extends GameObj{
 
     @Override
     public void update() {
-        setPositionX(getPositionX() + vx*direction);
+        setPositionX(getPositionX() + vx * direction);
+        setOffset(2 * vx * direction);
         isMoved = true;
     }
 
