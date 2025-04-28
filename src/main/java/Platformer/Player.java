@@ -15,6 +15,7 @@ public class Player extends GameObj{
         super(spriteName, x, y);
         movable = true;
         solid = true;
+        pushable = true;
     }
 
     @Override

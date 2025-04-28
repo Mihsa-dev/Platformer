@@ -5,6 +5,7 @@ public class Box extends GameObj{
         super(spriteName, x, y);
         movable = true;
         solid = true;
+        pushable = true;
     }
     @Override
     public  void start(){

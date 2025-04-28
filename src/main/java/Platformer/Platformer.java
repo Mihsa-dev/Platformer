@@ -95,11 +95,7 @@ public class Platformer extends JPanel{
         if (player.isMoved())
             player.Collide(player, player, levelManager.getCurrentLevel().getGameGrid(),
                     levelManager.getCurrentLevel().getMovables(), 0);
-//        for (GameObj obj : levelManager.getCurrentLevel().getMovables()){
-//            if(obj.isMovable())
-//                obj.Collide(obj, player, levelManager.getCurrentLevel().getGameGrid(),
-//                        levelManager.getCurrentLevel().getMovables(), 0);
-//        }
+
         for (GameObj obj : levelManager.getCurrentLevel().getMovables()){
             if(obj.isMoved())
                 obj.Collide(obj, player, levelManager.getCurrentLevel().getGameGrid(),
