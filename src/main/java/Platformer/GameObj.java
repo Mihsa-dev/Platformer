@@ -17,9 +17,10 @@ public abstract class GameObj {
     protected boolean movable;              // можно ли двигать объект
     protected boolean solid;                // пустой ли объект
     protected boolean isMoved = false;      // сдвинулся ли объект
-    private final Vector2D velocity;        // скорость объекта
-    private final float mass;                     // масса объекта
-    protected  boolean useGravity = false;   // использует ли объект гравитацию
+    private Vector2D velocity = new Vector2D(0,0);        // скорость объекта
+    private final float mass;               // масса объекта
+    protected  boolean useGravity = false;  // использует ли объект гравитацию
+    private int offset;
 
     public void start() {}
     public void update() {}
@@ -31,6 +32,7 @@ public abstract class GameObj {
         start();                    // Инициализация
         velocity = new Vector2D(0, 0);
         mass = 1;
+        offset = 0;
     }
 
     // Загрузка и масштабирование спрайта
@@ -115,8 +117,14 @@ public abstract class GameObj {
         Vector2D obj_vel = obj.getVelocity().clone();
         Vector2D result = new Vector2D(0,0);
 
-        if (this.isMovable() && obj.isMovable()){
-            result = obj_vel.multiply(-0.5f);
+//        if (this.isMovable() && obj instanceof Player){
+//            result = obj_vel.multiply(-0.5f);
+//        }
+
+        if(this.isMovable()) {
+            if (obj instanceof  Player){
+                result = obj_vel.multiply(-0.5f);
+            }
         }
 
         if (obj.isMovable() ){
@@ -136,6 +144,7 @@ public abstract class GameObj {
     private boolean pushX(boolean xxr, boolean xxl, GameObj obj, Vector2D result){
         if (xxr){
             obj.setPositionX(getPositionX() + SpriteSize);
+
             if (this.movable)
                 obj.addForce(result);
             return true;
@@ -153,6 +162,11 @@ public abstract class GameObj {
             obj.setPositionY(getPositionY() - SpriteSize);
             obj.addForce(result.getX(), -obj.velocity.getY());
 
+
+            if (this.isMovable())
+                obj.setPositionX(offset + obj.getPositionX());
+
+
             if (obj instanceof Player){
                 ((Player) obj).allowJump();
             }
@@ -161,11 +175,12 @@ public abstract class GameObj {
         }
         else if (yyd){
             obj.setPositionY(getPositionY() + SpriteSize);
-            obj.addForce(result);
             return true;
         }
         return false;
     }
+
+    public void onCollision(){}
 
     public void addForce(Vector2D force) {
 
@@ -183,11 +198,15 @@ public abstract class GameObj {
         if(this.movable && this.useGravity){
             addForce(0, 1);
         }
+
         applyFrictionX(0.7f);
         Threshold(0.01f);
+
         setPositionX(getPositionX() + (int)getVelocity().getX());
         setPositionY(getPositionY() + (int)getVelocity().getY());
+
         if (getVelocity().len() != 0) isMoved = true;
+
     }
 
     // метод для сопротивления среды ускорению
@@ -203,7 +222,9 @@ public abstract class GameObj {
     // Геттеры и сеттеры
     public Image getSprite() { return sprite; }
     public int getPositionX() { return positionX; }
-    public void setPositionX(int x) { positionX = x; }
+    public void setPositionX(int x) {
+        positionX = x;
+    }
     public int getPositionY() { return positionY; }
     public void setPositionY(int y) { positionY = y; }
 
@@ -229,5 +250,9 @@ public abstract class GameObj {
     public void setVelocity(float x, float y) {
         this.velocity.setX(x);
         this.velocity.setY(y);
+    }
+
+    public void setOffset(int x) {
+        offset = x;
     }
 }

@@ -38,7 +38,7 @@ public class Player extends GameObj{
             addForce(vx, 0);
         }
         if (isUp){
-            jumpBuffer = 5;
+            jumpBuffer = 4;
         }
 
         if (jumpBuffer > 0 && canJump && coyoteTime > 0) {
