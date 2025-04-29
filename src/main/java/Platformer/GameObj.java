@@ -123,9 +123,9 @@ public abstract class GameObj {
         }
 
         if (y_off < x_off){
-            return pushX(xxr, xxl, obj, result);
+            return pushX(xxr, xxl, obj, new Vector2D(result.getX(), 0));
         }
-        else if (x_off < y_off && obj.pushable){
+        else if (x_off < y_off && obj.pushable) {
             return pushY(yyu, yyd, obj, result);
         }
         return false;
@@ -164,6 +164,7 @@ public abstract class GameObj {
         }
         else if (yyd){
             obj.setPositionY(getPositionY() + SpriteSize);
+            obj.addForce(result);
             return true;
         }
         return false;
