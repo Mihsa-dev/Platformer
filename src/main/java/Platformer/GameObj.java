@@ -130,7 +130,7 @@ public abstract class GameObj {
         }
         return false;
     }
-    private boolean pushX(boolean xxr, boolean xxl, GameObj obj, Vector2D result){
+    protected boolean pushX(boolean xxr, boolean xxl, GameObj obj, Vector2D result){
         if (xxr){
             obj.setPositionX(getPositionX() + SpriteSize);
 
@@ -147,7 +147,7 @@ public abstract class GameObj {
         }
         return false;
     }
-    private boolean pushY(boolean yyu, boolean yyd, GameObj obj, Vector2D result){
+    protected boolean pushY(boolean yyu, boolean yyd, GameObj obj, Vector2D result){
         if (yyu) {
             obj.setPositionY(getPositionY() - SpriteSize);
             obj.addForce(result.getX(), -obj.velocity.getY());

@@ -2,8 +2,6 @@ package Platformer;
 
 import java.util.ArrayList;
 
-import static Platformer.Constant.SpriteSize;
-
 public class Platform_hor extends GameObj{
     private int vx;  // Скорость по X
     private int direction; // когда -1 - влево, когда 1 - вправо
@@ -31,8 +29,10 @@ public class Platform_hor extends GameObj{
 
     @Override
     public void Collide(GameObj prev, Player player, GameObj[][] gameGrid, ArrayList<GameObj> movables, int k) {
-
-        if (prev.isSolid() && prev != player && prev != this){
+        if (prev instanceof Player){
+          prev.getVelocity().setX(prev.getVelocity().getX() * -1f);
+        }
+        if (prev.isSolid() && prev != this){
             direction *= -1;
         }
         super.Collide(prev, player, gameGrid, movables, k+1);
