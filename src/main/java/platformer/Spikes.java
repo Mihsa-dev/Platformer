@@ -1,9 +1,9 @@
-package Platformer;
+package platformer;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
-import static Platformer.Constant.SpriteSize;
+import static platformer.Constant.SpriteSize;
 
 public class Spikes extends GameObj{
 
@@ -14,7 +14,7 @@ public class Spikes extends GameObj{
     }
 
     @Override
-    public void Collide(GameObj prev, Player player, GameObj[][] gameGrid, ArrayList<GameObj> movables, int k) {
+    public void collide(GameObj prev, Player player, GameObj[][] gameGrid, ArrayList<GameObj> movables, int k) {
         if (prev instanceof Player) {
             if ((Math.min(
                     prev.getPositionX() + SpriteSize - this.getPositionX(),
@@ -50,7 +50,7 @@ public class Spikes extends GameObj{
             }
         }
         else{
-            super.Collide(prev, player, gameGrid, movables, k);
+            super.collide(prev, player, gameGrid, movables, k+1);
         }
     }
 }

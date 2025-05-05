@@ -1,4 +1,4 @@
-package Platformer;
+package platformer;
 
 import java.io.IOException;
 import java.util.List;

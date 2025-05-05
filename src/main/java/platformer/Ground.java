@@ -1,4 +1,4 @@
-package Platformer;
+package platformer;
 
 public class Ground extends GameObj{
     public Ground(String spriteName, int x, int y) {

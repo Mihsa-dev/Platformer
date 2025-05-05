@@ -1,16 +1,16 @@
-package Platformer;
+package platformer;
 
 import java.util.ArrayList;
 
-public class levelEnd extends GameObj{
-    public levelEnd(String spriteName, int x, int y) {
+public class LevelEnd extends GameObj{
+    public LevelEnd(String spriteName, int x, int y) {
         super(spriteName, x, y);
         movable = false;
-        solid = true;
+        solid = false;
     }
 
     @Override
-    public void Collide(GameObj prev, Player player, GameObj[][] gameGrid, ArrayList<GameObj> movables, int k){
+    public void collide(GameObj prev, Player player, GameObj[][] gameGrid, ArrayList<GameObj> movables, int k){
         if (prev instanceof Player){
             GameObj.levelManager.nextLevel();
             prev.setPositionX(GameObj.levelManager.getCurrentLevel().getPlayerPosX());

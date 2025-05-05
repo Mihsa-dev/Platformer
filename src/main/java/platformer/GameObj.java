@@ -1,4 +1,4 @@
-package Platformer;
+package platformer;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -6,7 +6,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import static Platformer.Constant.*;
+import static platformer.Constant.*;
 
 public abstract class GameObj {
     public static LevelManager levelManager;
@@ -48,13 +48,13 @@ public abstract class GameObj {
     }
 
     // Метод для вызова проверки на пересечения с окружающими объектами
-    public void Collide(GameObj prev, Player player, GameObj[][] gameGrid, ArrayList<GameObj> movables, int k){
-        if(k > 10) return;
+    public void collide(GameObj prev, Player player, GameObj[][] gameGrid, ArrayList<GameObj> movables, int k){
+        if(k > 10  || !this.isSolid()) return;
 
         if(this.movable){
             if (prev != player || this!=player){
                 if (pushColl(prev, player)){
-                    player.Collide(this, player, gameGrid, movables, k+1);
+                    player.collide(this, player, gameGrid, movables, k+1);
                 }
 
             }
@@ -81,22 +81,22 @@ public abstract class GameObj {
                             ((getPositionY() + SpriteSize) > obj.getPositionY() &&
                                     getPositionY() < obj.getPositionY());
 
-                    if (obj.isSolid() && col){
-                        obj.Collide(this, player, gameGrid, movables, k+1);
+                    if (col){
+                        obj.collide(this, player, gameGrid, movables, k+1);
                     }
                 }
             }
         }
         else {
             if (pushColl(prev, player)){
-                player.Collide(this, player, gameGrid, movables, k+1);
+                player.collide(this, player, gameGrid, movables, k+1);
             }
         }
 
         for (GameObj obj : movables) {
             if(obj != this) {
                 if (pushColl(prev, obj)){
-                    obj.Collide(this, player, gameGrid, movables, k+1);
+                    obj.collide(this, player, gameGrid, movables, k+1);
                 }
 
             }
