@@ -1,4 +1,4 @@
-package Platformer;
+package platformer;
 
 public class Vector2D {
     private float x;

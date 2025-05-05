@@ -1,4 +1,4 @@
-package Platformer;
+package platformer;
 
 public final class Constant {
     private Constant() {}

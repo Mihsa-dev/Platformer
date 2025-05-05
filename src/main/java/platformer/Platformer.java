@@ -1,10 +1,10 @@
-package Platformer;
+package platformer;
 
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
 
-import static Platformer.Constant.*;
+import static platformer.Constant.*;
 
 public class Platformer extends JPanel{
 
@@ -93,12 +93,12 @@ public class Platformer extends JPanel{
         }
 
         if (player.isMoved())
-            player.Collide(player, player, levelManager.getCurrentLevel().getGameGrid(),
+            player.collide(player, player, levelManager.getCurrentLevel().getGameGrid(),
                     levelManager.getCurrentLevel().getMovables(), 0);
 
         for (GameObj obj : levelManager.getCurrentLevel().getMovables()){
             if(obj.isMoved())
-                obj.Collide(obj, player, levelManager.getCurrentLevel().getGameGrid(),
+                obj.collide(obj, player, levelManager.getCurrentLevel().getGameGrid(),
                         levelManager.getCurrentLevel().getMovables(), 0);
         }
         repaint();

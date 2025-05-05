@@ -1,18 +1,18 @@
-package Platformer;
+package platformer;
 
 import java.util.ArrayList;
 
-import static Platformer.Constant.SpriteSize;
-
-public class Platform_hor extends GameObj{
+public class PlatformHor extends GameObj{
     private int vx;  // Скорость по X
     private int direction; // когда -1 - влево, когда 1 - вправо
+    private boolean reverse_direction;
 
-    public Platform_hor(String spriteName, int x, int y) {
+    public PlatformHor(String spriteName, int x, int y) {
         super(spriteName, x, y);
         movable = true;
         solid = true;
         pushable = false;
+        reverse_direction = true;
     }
 
     @Override
@@ -30,11 +30,13 @@ public class Platform_hor extends GameObj{
     }
 
     @Override
-    public void Collide(GameObj prev, Player player, GameObj[][] gameGrid, ArrayList<GameObj> movables, int k) {
-
-        if (prev.isSolid() && prev != player && prev != this){
+    public void collide(GameObj prev, Player player, GameObj[][] gameGrid, ArrayList<GameObj> movables, int k) {
+        if (prev instanceof Player){
+          prev.getVelocity().setX(prev.getVelocity().getX() * -1f);
+        }
+        if (prev.isSolid() && prev != this){
             direction *= -1;
         }
-        super.Collide(prev, player, gameGrid, movables, k+1);
+        super.collide(prev, player, gameGrid, movables, k+1);
     }
 }

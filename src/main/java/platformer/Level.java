@@ -1,7 +1,7 @@
-package Platformer;
+package platformer;
 
 import java.util.ArrayList;
-import static Platformer.Constant.*;
+import static platformer.Constant.*;
 
 //хранит данные уровня
 public class Level {
@@ -35,12 +35,15 @@ public class Level {
                 else if(grid[i][j] == '^'){
                     gameGrid[i][j] = new Spikes("chleni.png", j * SpriteSize, i * SpriteSize);
                 }
+                else if(grid[i][j] == '|'){
+                    gameGrid[i][j] = new Stairs("stair.png", j * SpriteSize, i * SpriteSize);
+                }
                 else if(grid[i][j] == '-'){
-                    movables.add(new Platform_hor("platform.png", j * SpriteSize, i * SpriteSize));
+                    movables.add(new PlatformHor("platform.png", j * SpriteSize, i * SpriteSize));
                     gameGrid[i][j] = new EmptyObj("empty.png", j * SpriteSize, i * SpriteSize);
                 }
                 else if(grid[i][j] == '0'){
-                    gameGrid[i][j] = new levelEnd("scp_173_noBackground.png", j * SpriteSize, i * SpriteSize);
+                    gameGrid[i][j] = new LevelEnd("scp_173_noBackground.png", j * SpriteSize, i * SpriteSize);
                     levelEndPosInGridRow = i;
                     levelEndPosInGridColumn = j;
                 }
