@@ -14,6 +14,7 @@ public abstract class GameObj {
     private Image sprite;                   // Спрайт объекта
     private int positionX;                  // X-координата
     private int positionY;                  // Y-координата
+    protected String spriteName;
     protected boolean movable;              // можно ли двигать объект
     protected boolean solid;                // пустой ли объект
     protected boolean isMoved = false;      // сдвинулся ли объект
@@ -29,7 +30,7 @@ public abstract class GameObj {
         this.setSprite(spriteName); // Загружаем спрайт
         this.setPositionX(x);       // Устанавливаем позицию X
         this.setPositionY(y);       // Устанавливаем позицию Y
-        start();                    // Инициализация
+//        start();                    // Инициализация
         velocity = new Vector2D(0, 0);
         offset = 0;
         pushable = movable;
@@ -242,5 +243,9 @@ public abstract class GameObj {
 
     public void setOffset(int x) {
         offset = x;
+    }
+
+    public String getSpriteName(){
+        return spriteName;
     }
 }

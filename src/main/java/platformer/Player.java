@@ -17,6 +17,7 @@ public class Player extends GameObj{
         movable = true;
         solid = true;
         pushable = true;
+
     }
 
     @Override
@@ -66,7 +67,6 @@ public class Player extends GameObj{
             }
         }
 
-
     }
 
     public void allowJump(){
@@ -80,5 +80,9 @@ public class Player extends GameObj{
             useGravity = true;
         }
         super.collide(prev, player, gameGrid, movables, k+1);
+    }
+
+    public boolean isEmpty(){
+        return super.getSpriteName().equals("empty.png");
     }
 }

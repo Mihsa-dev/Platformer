@@ -8,7 +8,7 @@ import static platformer.Constant.*;
 
 public class Platformer extends JPanel{
 
-    private final Player player;
+    public static Player player;
     private final Thread thread;
     private final LevelManager levelManager;
     private final InputListener listener;
@@ -16,10 +16,13 @@ public class Platformer extends JPanel{
     public Platformer() throws IOException {
         super();
         setFocusable(true);
+
         this.levelManager = new LevelManager(); // Инициализация менеджера уровней
-        this.player = new Player("ee86dafa1924dd4c209bcf0a2145ebab.jpg",
+        GameObj.levelManager = this.levelManager;
+        player = new Player("ee86dafa1924dd4c209bcf0a2145ebab.jpg",
                 levelManager.getCurrentLevel().getPlayerPosX(),
                 levelManager.getCurrentLevel().getPlayerPosY());
+        useAllStart();
 
         // Регистрируем слушатель клавиш
         listener = new InputListener();
@@ -29,6 +32,19 @@ public class Platformer extends JPanel{
         thread = new MoveThread(this);
         thread.setDaemon(true); // Поток завершится при закрытии приложения
         thread.start();
+    }
+
+    private void useAllStart(){
+        // после загрузки уровня вызываем у всех объектов start
+        for (GameObj[] arr : levelManager.getCurrentLevel().getGameGrid()){
+            for (GameObj obj : arr){
+                obj.start();
+            }
+        }
+        for (GameObj obj : levelManager.getCurrentLevel().getMovables()){
+            obj.start();
+        }
+        player.start();
     }
 
     @Override
@@ -73,7 +89,7 @@ public class Platformer extends JPanel{
     public static void main(String[] args) throws IOException {
         JFrame frame = new JFrame();
         Platformer platformer = new Platformer();
-        GameObj.levelManager = platformer.levelManager;
+//        GameObj.levelManager = platformer.levelManager;
 
         platformer.setSize(ScreenWidth,ScreenHeight);
         platformer.setPreferredSize(new Dimension(ScreenWidth,ScreenHeight));
