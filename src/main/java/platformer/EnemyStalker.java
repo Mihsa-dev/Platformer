@@ -4,13 +4,14 @@ import java.util.ArrayList;
 
 import static platformer.Constant.SpriteSize;
 
-public class EnemyFly extends GameObj{
+public class EnemyStalker extends GameObj{
 
     private int vx;  // Скорость по X
     private int vy;  // Скорость по Y
+    private boolean canJump;
     private Player player;
 
-    public EnemyFly(String spriteName, int x, int y) {
+    public EnemyStalker(String spriteName, int x, int y) {
         super(spriteName, x, y);
         movable = true;
         solid = true;
@@ -20,7 +21,9 @@ public class EnemyFly extends GameObj{
     @Override
     public void start() {
         vx = 2;  // Базовая скорость по горизонтали
-        vy = 1;  // Базовая скорость по вертикали
+        vy = 20;  // Базовая скорость по вертикали
+        canJump = true;
+        useGravity = true;
 
         player = Platformer.player;
     }
@@ -33,15 +36,14 @@ public class EnemyFly extends GameObj{
         else{
             vx = -2;
         }
-        if (getPositionY() <= player.getPositionY()){
-            vy = 1;
-        }
-        else {
-            vy = -1;
+        setPositionX(getPositionX() + vx);
+
+
+        if (getPositionY() >= player.getPositionY() && canJump){
+            addForce(0, -vy);
+            canJump = false;
         }
 
-        setPositionX(getPositionX() + vx);
-        setPositionY(getPositionY() + vy);
         isMoved = true;
     }
 
@@ -64,5 +66,9 @@ public class EnemyFly extends GameObj{
         else{
             super.collide(prev, player, gameGrid, movables, k+1);
         }
+    }
+
+    public void allowJump(){
+        this.canJump = true;
     }
 }

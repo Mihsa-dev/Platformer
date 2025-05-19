@@ -160,6 +160,9 @@ public abstract class GameObj {
             if (obj instanceof Player){
                 ((Player) obj).allowJump();
             }
+            if (obj instanceof EnemyStalker){
+                ((EnemyStalker) obj).allowJump();
+            }
 
             return true;
         }

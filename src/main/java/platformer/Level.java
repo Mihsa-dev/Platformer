@@ -60,6 +60,14 @@ public class Level {
                     movables.add(new EnemyFly("MYPGqYP10O0.jpg", j * SpriteSize, i * SpriteSize));
                     gameGrid[i][j] = new EmptyObj("empty.png", j * SpriteSize, i * SpriteSize);
                 }
+                else if(grid[i][j] == 'p'){
+                    movables.add(new EnemyPatrol("military_pig.jpg", j * SpriteSize, i * SpriteSize));
+                    gameGrid[i][j] = new EmptyObj("empty.png", j * SpriteSize, i * SpriteSize);
+                }
+                else if(grid[i][j] == 's'){
+                    movables.add(new EnemyStalker("hog.jpg", j * SpriteSize, i * SpriteSize));
+                    gameGrid[i][j] = new EmptyObj("empty.png", j * SpriteSize, i * SpriteSize);
+                }
                 else{
                     gameGrid[i][j] = new EmptyObj("empty.png", j * SpriteSize, i * SpriteSize);
                 }

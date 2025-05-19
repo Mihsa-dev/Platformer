@@ -17,7 +17,6 @@ public class Player extends GameObj{
         movable = true;
         solid = true;
         pushable = true;
-
     }
 
     @Override
@@ -82,7 +81,4 @@ public class Player extends GameObj{
         super.collide(prev, player, gameGrid, movables, k+1);
     }
 
-    public boolean isEmpty(){
-        return super.getSpriteName().equals("empty.png");
-    }
 }
