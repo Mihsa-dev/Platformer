@@ -1,4 +1,7 @@
-package platformer;
+package platformer.gameCore.level;
+
+import platformer.gameCore.entities.GameObj;
+import platformer.render.Platformer;
 
 import java.io.IOException;
 import java.util.List;

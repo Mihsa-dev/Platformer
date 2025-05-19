@@ -1,4 +1,4 @@
-package platformer;
+package platformer.gameCore.entities;
 
 import java.util.ArrayList;
 

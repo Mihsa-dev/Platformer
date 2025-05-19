@@ -1,8 +1,10 @@
-package platformer;
+package platformer.gameCore.entities;
+
+import platformer.render.Platformer;
 
 import java.util.ArrayList;
 
-import static platformer.Constant.SpriteSize;
+import static platformer.gameCore.utils.Constant.SpriteSize;
 
 public class EnemyFly extends GameObj{
 

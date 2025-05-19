@@ -1,4 +1,4 @@
-package platformer;
+package platformer.gameCore.utils;
 
 public final class Constant {
     private Constant() {}

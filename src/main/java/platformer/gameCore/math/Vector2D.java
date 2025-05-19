@@ -1,4 +1,4 @@
-package platformer;
+package platformer.gameCore.math;
 
 public class Vector2D {
     private float x;

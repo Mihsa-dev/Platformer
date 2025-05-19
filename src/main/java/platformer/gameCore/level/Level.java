@@ -1,7 +1,9 @@
-package platformer;
+package platformer.gameCore.level;
+
+import platformer.gameCore.entities.*;
 
 import java.util.ArrayList;
-import static platformer.Constant.*;
+import static platformer.gameCore.utils.Constant.*;
 
 //хранит данные уровня
 public class Level {
@@ -18,7 +20,7 @@ public class Level {
     public Level(char[][] tiles) {
         this.grid = tiles;
         this.gameGrid = new GameObj[tiles.length][tiles[0].length];
-        this.movables = new ArrayList<GameObj>();
+        this.movables = new ArrayList<>();
         getLevelReady();
     }
 
@@ -30,46 +32,46 @@ public class Level {
         for (int i = 0; i < 10; i++){
             for (int j = 0; j < 20; j++){
                 if(grid[i][j] == '#'){
-                    gameGrid[i][j] = new Ground("poldlyapidorov.png", j * SpriteSize, i * SpriteSize);
+                    gameGrid[i][j] = new Ground("sprites/poldlyapidorov.png", j * SpriteSize, i * SpriteSize);
                 }
                 else if(grid[i][j] == '^'){
-                    gameGrid[i][j] = new Spikes("chleni.png", j * SpriteSize, i * SpriteSize);
+                    gameGrid[i][j] = new Spikes("sprites/chleni.png", j * SpriteSize, i * SpriteSize);
                 }
                 else if(grid[i][j] == '|'){
-                    gameGrid[i][j] = new Stairs("stair.png", j * SpriteSize, i * SpriteSize);
+                    gameGrid[i][j] = new Stairs("sprites/stair.png", j * SpriteSize, i * SpriteSize);
                 }
                 else if(grid[i][j] == '-'){
-                    movables.add(new PlatformHor("platform.png", j * SpriteSize, i * SpriteSize));
-                    gameGrid[i][j] = new EmptyObj("empty.png", j * SpriteSize, i * SpriteSize);
+                    movables.add(new PlatformHor("sprites/platform.png", j * SpriteSize, i * SpriteSize));
+                    gameGrid[i][j] = new EmptyObj("sprites/empty.png", j * SpriteSize, i * SpriteSize);
                 }
                 else if(grid[i][j] == '0'){
-                    gameGrid[i][j] = new LevelEnd("scp_173_noBackground.png", j * SpriteSize, i * SpriteSize);
+                    gameGrid[i][j] = new LevelEnd("sprites/scp_173_noBackground.png", j * SpriteSize, i * SpriteSize);
                     levelEndPosInGridRow = i;
                     levelEndPosInGridColumn = j;
                 }
                 else if(grid[i][j] == '@'){
                     playerPosX = j * SpriteSize;
                     playerPosY = i * SpriteSize;
-                    gameGrid[i][j] = new EmptyObj("empty.png", j * SpriteSize, i * SpriteSize);
+                    gameGrid[i][j] = new EmptyObj("sprites/empty.png", j * SpriteSize, i * SpriteSize);
                 }
                 else if(grid[i][j] == 'b'){
-                    movables.add(new Box("box.png", j * SpriteSize, i * SpriteSize));
-                    gameGrid[i][j] = new EmptyObj("empty.png", j * SpriteSize, i * SpriteSize);
+                    movables.add(new Box("sprites/box.png", j * SpriteSize, i * SpriteSize));
+                    gameGrid[i][j] = new EmptyObj("sprites/empty.png", j * SpriteSize, i * SpriteSize);
                 }
                 else if(grid[i][j] == 'f'){
-                    movables.add(new EnemyFly("MYPGqYP10O0.jpg", j * SpriteSize, i * SpriteSize));
-                    gameGrid[i][j] = new EmptyObj("empty.png", j * SpriteSize, i * SpriteSize);
+                    movables.add(new EnemyFly("sprites/MYPGqYP10O0.jpg", j * SpriteSize, i * SpriteSize));
+                    gameGrid[i][j] = new EmptyObj("sprites/empty.png", j * SpriteSize, i * SpriteSize);
                 }
                 else if(grid[i][j] == 'p'){
-                    movables.add(new EnemyPatrol("military_pig.jpg", j * SpriteSize, i * SpriteSize));
-                    gameGrid[i][j] = new EmptyObj("empty.png", j * SpriteSize, i * SpriteSize);
+                    movables.add(new EnemyPatrol("sprites/military_pig.jpg", j * SpriteSize, i * SpriteSize));
+                    gameGrid[i][j] = new EmptyObj("sprites/empty.png", j * SpriteSize, i * SpriteSize);
                 }
                 else if(grid[i][j] == 's'){
-                    movables.add(new EnemyStalker("hog.jpg", j * SpriteSize, i * SpriteSize));
-                    gameGrid[i][j] = new EmptyObj("empty.png", j * SpriteSize, i * SpriteSize);
+                    movables.add(new EnemyStalker("sprites/hog.jpg", j * SpriteSize, i * SpriteSize));
+                    gameGrid[i][j] = new EmptyObj("sprites/empty.png", j * SpriteSize, i * SpriteSize);
                 }
                 else{
-                    gameGrid[i][j] = new EmptyObj("empty.png", j * SpriteSize, i * SpriteSize);
+                    gameGrid[i][j] = new EmptyObj("sprites/empty.png", j * SpriteSize, i * SpriteSize);
                 }
             }
         }

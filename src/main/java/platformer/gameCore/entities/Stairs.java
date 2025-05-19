@@ -1,8 +1,8 @@
-package platformer;
+package platformer.gameCore.entities;
 
 import java.util.ArrayList;
 
-import static platformer.Constant.SpriteSize;
+import static platformer.gameCore.utils.Constant.SpriteSize;
 
 public class Stairs extends GameObj{
     public Stairs(String spriteName, int x, int y) {

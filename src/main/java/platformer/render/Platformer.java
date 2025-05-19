@@ -1,10 +1,15 @@
-package platformer;
+package platformer.render;
+
+import platformer.gameCore.entities.GameObj;
+import platformer.gameCore.level.LevelManager;
+import platformer.gameCore.entities.Player;
+import platformer.input.InputListener;
 
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
 
-import static platformer.Constant.*;
+import static platformer.gameCore.utils.Constant.*;
 
 public class Platformer extends JPanel{
 
@@ -19,7 +24,7 @@ public class Platformer extends JPanel{
 
         this.levelManager = new LevelManager(); // Инициализация менеджера уровней
         GameObj.levelManager = this.levelManager;
-        player = new Player("ee86dafa1924dd4c209bcf0a2145ebab.jpg",
+        player = new Player("sprites/blackPlayer.jpg",
                 levelManager.getCurrentLevel().getPlayerPosX(),
                 levelManager.getCurrentLevel().getPlayerPosY());
         useAllStart();

@@ -1,8 +1,8 @@
-package platformer;
+package platformer.gameCore.entities;
 
 import java.util.ArrayList;
 
-import static platformer.Constant.*;
+import static platformer.gameCore.utils.Constant.*;
 
 public class EnemyPatrol extends GameObj{
 
@@ -78,7 +78,7 @@ public class EnemyPatrol extends GameObj{
         }
         else{
             if ((yy - 1 > 0) && (xx + 1 < ScreenHeight/SpriteSize)){
-                return gameGrid[xx + 1][yy - 1] instanceof EmptyObj;
+                return gameGrid[xx + 1][yy] instanceof EmptyObj;
             }
         }
         return false;

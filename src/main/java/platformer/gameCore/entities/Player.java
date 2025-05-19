@@ -1,8 +1,10 @@
-package platformer;
+package platformer.gameCore.entities;
+
+import platformer.gameCore.math.Vector2D;
 
 import java.util.ArrayList;
 
-import static platformer.InputListener.*;
+import static platformer.input.InputListener.*;
 
 public class Player extends GameObj{
 

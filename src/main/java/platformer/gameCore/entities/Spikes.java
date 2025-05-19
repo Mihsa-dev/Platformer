@@ -1,9 +1,8 @@
-package platformer;
+package platformer.gameCore.entities;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
-import static platformer.Constant.SpriteSize;
+import static platformer.gameCore.utils.Constant.SpriteSize;
 
 public class Spikes extends GameObj{
 

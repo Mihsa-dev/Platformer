@@ -1,4 +1,4 @@
-package platformer;
+package platformer.gameCore.entities;
 
 public class EmptyObj extends GameObj{
     public EmptyObj(String spriteName, int x, int y) {

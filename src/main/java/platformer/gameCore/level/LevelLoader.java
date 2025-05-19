@@ -1,4 +1,4 @@
-package platformer;
+package platformer.gameCore.level;
 
 import java.io.IOException;
 import java.nio.file.Files;
