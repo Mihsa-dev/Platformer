@@ -66,7 +66,6 @@ public class Player extends GameObj{
             }
         }
 
-
     }
 
     public void allowJump(){
@@ -81,4 +80,5 @@ public class Player extends GameObj{
         }
         super.collide(prev, player, gameGrid, movables, k+1);
     }
+
 }

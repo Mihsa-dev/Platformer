@@ -5,14 +5,12 @@ import java.util.ArrayList;
 public class PlatformHor extends GameObj{
     private int vx;  // Скорость по X
     private int direction; // когда -1 - влево, когда 1 - вправо
-    private boolean reverse_direction;
 
     public PlatformHor(String spriteName, int x, int y) {
         super(spriteName, x, y);
         movable = true;
         solid = true;
         pushable = false;
-        reverse_direction = true;
     }
 
     @Override

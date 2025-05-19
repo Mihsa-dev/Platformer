@@ -17,8 +17,8 @@ public class Level {
 
     public Level(char[][] tiles) {
         this.grid = tiles;
-        gameGrid = new GameObj[tiles.length][tiles[0].length];
-        movables = new ArrayList<GameObj>();
+        this.gameGrid = new GameObj[tiles.length][tiles[0].length];
+        this.movables = new ArrayList<GameObj>();
         getLevelReady();
     }
 
@@ -54,6 +54,18 @@ public class Level {
                 }
                 else if(grid[i][j] == 'b'){
                     movables.add(new Box("box.png", j * SpriteSize, i * SpriteSize));
+                    gameGrid[i][j] = new EmptyObj("empty.png", j * SpriteSize, i * SpriteSize);
+                }
+                else if(grid[i][j] == 'f'){
+                    movables.add(new EnemyFly("MYPGqYP10O0.jpg", j * SpriteSize, i * SpriteSize));
+                    gameGrid[i][j] = new EmptyObj("empty.png", j * SpriteSize, i * SpriteSize);
+                }
+                else if(grid[i][j] == 'p'){
+                    movables.add(new EnemyPatrol("military_pig.jpg", j * SpriteSize, i * SpriteSize));
+                    gameGrid[i][j] = new EmptyObj("empty.png", j * SpriteSize, i * SpriteSize);
+                }
+                else if(grid[i][j] == 's'){
+                    movables.add(new EnemyStalker("hog.jpg", j * SpriteSize, i * SpriteSize));
                     gameGrid[i][j] = new EmptyObj("empty.png", j * SpriteSize, i * SpriteSize);
                 }
                 else{
