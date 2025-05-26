@@ -14,7 +14,7 @@ import static platformer.gameCore.utils.Constant.*;
 public abstract class GameObj {
     public static LevelManager levelManager;
 
-    private Image sprite;                   // Спрайт объекта
+    private Image sprite;                   // Базовый спрайт объекта
     private int positionX;                  // X-координата
     private int positionY;                  // Y-координата
     protected String spriteName;
