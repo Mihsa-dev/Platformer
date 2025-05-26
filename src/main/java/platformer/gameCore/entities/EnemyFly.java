@@ -2,6 +2,9 @@ package platformer.gameCore.entities;
 
 import platformer.render.Platformer;
 
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.io.File;
 import java.util.ArrayList;
 
 import static platformer.gameCore.utils.Constant.SpriteSize;
