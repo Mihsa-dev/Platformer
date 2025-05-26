@@ -22,7 +22,7 @@ public class EnemyPatrol extends GameObj{
     public void start() {
         vx = 2;  // Базовая скорость по горизонтали
         direction = 1;
-        spriteStorage.setCurrentIndex(1);
+        spriteStorage.setCurrentIndex(0);
         useGravity = false;
     }
 
