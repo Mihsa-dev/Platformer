@@ -45,28 +45,20 @@ public class EnemyPatrol extends GameObj{
                 GameObj.levelManager.reloadLevel();
             }
         }
+
+        if (CheckNeedUseGravity(gameGrid)){
+            useGravity = true;
+        }
+        else{
+            useGravity = false;
+        }
+
         if (prev.isSolid() && prev != this || checkEndRoad(gameGrid)){
             direction *= -1;
         }
         super.collide(prev, player, gameGrid, movables, k+1);
     }
 
-//    private boolean checkEndRoad(GameObj[][] gameGrid){
-//        int yy = this.getPositionX() / SpriteSize;
-//        int xx = this.getPositionY() / SpriteSize;
-//
-//        if (direction == 1){
-//            if ((yy + 1 < ScreenWidth/SpriteSize) && (xx + 1 < ScreenHeight/SpriteSize)){
-//                return gameGrid[xx + 1][yy + 1] instanceof EmptyObj;
-//            }
-//        }
-//        else{
-//            if ((yy - 1 > 0) && (xx + 1 < ScreenHeight/SpriteSize)){
-//                return gameGrid[xx + 1][yy - 1] instanceof EmptyObj;
-//            }
-//        }
-//        return false;
-//    }
     private boolean checkEndRoad(GameObj[][] gameGrid){
         int yy = this.getPositionX() / SpriteSize;
         int xx = this.getPositionY() / SpriteSize;
@@ -81,6 +73,18 @@ public class EnemyPatrol extends GameObj{
                 return gameGrid[xx + 1][yy] instanceof EmptyObj;
             }
         }
+        return false;
+    }
+
+    private boolean CheckNeedUseGravity(GameObj[][] gameGrid){
+        //координаты клетки под существом
+        int yy = (this.getPositionX() + SpriteSize) / SpriteSize;
+        int xx = (this.getPositionY() + SpriteSize) / SpriteSize;
+
+        if ((yy < ScreenWidth/SpriteSize) && (xx < ScreenHeight/SpriteSize)){
+            return gameGrid[xx][yy] instanceof EmptyObj;
+        }
+
         return false;
     }
 }

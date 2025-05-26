@@ -23,7 +23,7 @@ public class Platformer extends JPanel {
 
         this.levelManager = new LevelManager();
         GameObj.levelManager = this.levelManager;
-        player = new Player("sprites/blackPlayer.jpg",
+        player = new Player("sprites/blackPlayer.png",
                 levelManager.getCurrentLevel().getPlayerPosX(),
                 levelManager.getCurrentLevel().getPlayerPosY());
 
