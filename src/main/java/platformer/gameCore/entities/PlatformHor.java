@@ -7,7 +7,7 @@ public class PlatformHor extends GameObj{
     private int direction; // когда -1 - влево, когда 1 - вправо
 
     public PlatformHor(String spriteName, int x, int y) {
-        super(spriteName, x, y);
+        super(x, y, spriteName);
         movable = true;
         solid = true;
         pushable = false;

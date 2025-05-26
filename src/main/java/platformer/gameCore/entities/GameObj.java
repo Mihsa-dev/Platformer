@@ -2,6 +2,7 @@ package platformer.gameCore.entities;
 
 import platformer.gameCore.level.LevelManager;
 import platformer.gameCore.math.Vector2D;
+import platformer.gameCore.utils.SpriteStorage;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -14,7 +15,8 @@ import static platformer.gameCore.utils.Constant.*;
 public abstract class GameObj {
     public static LevelManager levelManager;
 
-    private Image sprite;                   // Базовый спрайт объекта
+    protected SpriteStorage spriteStorage;
+    //private Image sprite;                   // Базовый спрайт объекта
     private int positionX;                  // X-координата
     private int positionY;                  // Y-координата
     protected String spriteName;
@@ -29,31 +31,38 @@ public abstract class GameObj {
     public void start() {}
     public void update() {}
 
-    public GameObj(String spriteName, int x, int y) {
-        this.setSprite(spriteName); // Загружаем спрайт
+//    public GameObj(String spriteName, int x, int y) {
+//        this.setSprite(spriteName); // Загружаем спрайт
+//        this.setPositionX(x);       // Устанавливаем позицию X
+//        this.setPositionY(y);       // Устанавливаем позицию Y
+//        velocity = new Vector2D(0, 0);
+//        offset = 0;
+//        pushable = movable;
+//    }
+    public GameObj(int x, int y, String... filenames) {
+        spriteStorage = new SpriteStorage(filenames); // Загружаем спрайты
         this.setPositionX(x);       // Устанавливаем позицию X
         this.setPositionY(y);       // Устанавливаем позицию Y
-//        start();                    // Инициализация
         velocity = new Vector2D(0, 0);
         offset = 0;
         pushable = movable;
     }
 
-    // Загрузка и масштабирование спрайта
-    public void setSprite(String spriteNameFile) {
-        try{
-            this.sprite = ImageIO.read(new File(spriteNameFile))
-                .getScaledInstance(SpriteSize,SpriteSize,Image.SCALE_SMOOTH);
-        }
-        catch (IOException e){
-            System.err.println("сука, че с файлом:" + e.getMessage());
-        }
-
-    }
+//    // Загрузка и масштабирование спрайта
+//    public void setSprite(String spriteNameFile) {
+//        try{
+//            this.sprite = ImageIO.read(new File(spriteNameFile))
+//                .getScaledInstance(SpriteSize,SpriteSize,Image.SCALE_SMOOTH);
+//        }
+//        catch (IOException e){
+//            System.err.println("сука, че с файлом:" + e.getMessage());
+//        }
+//
+//    }
 
     // Метод для вызова проверки на пересечения с окружающими объектами
     public void collide(GameObj prev, Player player, GameObj[][] gameGrid, ArrayList<GameObj> movables, int k){
-        if(k > 7  || !this.isSolid()) return;
+        if(k > 9  || !this.isSolid()) return;
 
         if(this.movable){
             if (prev != player || this!=player){
@@ -215,7 +224,10 @@ public abstract class GameObj {
     }
 
     // Геттеры и сеттеры
-    public Image getSprite() { return sprite; }
+    //public Image getSprite() { return sprite; }
+    public SpriteStorage getSpriteStorage(){
+        return spriteStorage;
+    }
     public int getPositionX() { return positionX; }
     public void setPositionX(int x) {
         positionX = x;
