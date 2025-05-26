@@ -35,7 +35,8 @@ public class GameRenderer {
             for (int x = 0; x < 20; x++) {
                 var obj = levelManager.getCurrentLevel().getGameGrid()[y][x];
                 g2d.drawImage(
-                        obj.getSprite(),
+                        //obj.getSprite(),
+                        obj.getSpriteStorage().getImage(),
                         obj.getPositionX(),
                         obj.getPositionY(),
                         null
@@ -47,7 +48,8 @@ public class GameRenderer {
     private void renderMovableObjects(Graphics2D g2d) {
         for (var obj : levelManager.getCurrentLevel().getMovables()) {
             g2d.drawImage(
-                    obj.getSprite(),
+                    //obj.getSprite(),
+                    obj.getSpriteStorage().getImage(),
                     obj.getPositionX(),
                     obj.getPositionY(),
                     null
@@ -57,7 +59,8 @@ public class GameRenderer {
 
     private void renderPlayer(Graphics2D g2d) {
         g2d.drawImage(
-                player.getSprite(),
+                //player.getSprite(),
+                player.getSpriteStorage().getImage(),
                 player.getPositionX(),
                 player.getPositionY(),
                 null

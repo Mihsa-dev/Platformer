@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class LevelEnd extends GameObj{
     public LevelEnd(String spriteName, int x, int y) {
-        super(spriteName, x, y);
+        super(x, y, spriteName);
         movable = false;
         solid = false;
     }

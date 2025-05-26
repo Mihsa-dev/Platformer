@@ -10,12 +10,13 @@ public class Player extends GameObj{
 
     private int vx;  // Скорость по X
     private int vy;  // Сила прыжка
+    private boolean direction; // текущее направление движения, 1 - движение вправо, 0 - движение влево
     private boolean canJump;
     private int coyoteTime;
     private int jumpBuffer;
 
-    public Player(String spriteName, int x, int y) {
-        super(spriteName, x, y);
+    public Player(int x, int y, String... spriteNames) {
+        super(x, y, spriteNames);
         movable = true;
         solid = true;
         pushable = true;
@@ -26,6 +27,8 @@ public class Player extends GameObj{
         vx = 4;  // Базовая скорость по горизонтали
         vy = 23;  // Базовая скорость по вертикали
         useGravity = true;
+        spriteStorage.setCurrentIndex(0);
+        direction = true;
     }
 
     @Override
@@ -37,9 +40,17 @@ public class Player extends GameObj{
 
         if (isLeft){
             addForce(-vx, 0);
+            if (direction){
+                spriteStorage.increaseCurrentIndex();
+            }
+            direction = false;
         }
         if (isRight){
             addForce(vx, 0);
+            if (!direction){
+                spriteStorage.increaseCurrentIndex();
+            }
+            direction = true;
         }
 
 

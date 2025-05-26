@@ -8,24 +8,36 @@ public class EnemyPatrol extends GameObj{
 
     private int vx;  // Скорость по X
     private int direction; // когда -1 - влево, когда 1 - вправо
+    private boolean needSwapDirection;
 
-    public EnemyPatrol(String spriteName, int x, int y) {
-        super(spriteName, x, y);
+    public EnemyPatrol(int x, int y, String... spriteNames) {
+        super(x, y, spriteNames);
         movable = true;
         solid = true;
         pushable = true;
+        needSwapDirection = false;
     }
 
     @Override
     public void start() {
         vx = 2;  // Базовая скорость по горизонтали
         direction = 1;
+        spriteStorage.setCurrentIndex(1);
         useGravity = false;
     }
 
     @Override
     public void update() {
         setPositionX(getPositionX() + vx * direction);
+        if (needSwapDirection){
+            if (direction == 1){
+                spriteStorage.increaseCurrentIndex();
+            }
+            else{
+                spriteStorage.decreaseCurrentIndex();
+            }
+            needSwapDirection = false;
+        }
         isMoved = true;
     }
 
@@ -55,6 +67,7 @@ public class EnemyPatrol extends GameObj{
 
         if (prev.isSolid() && prev != this || checkEndRoad(gameGrid)){
             direction *= -1;
+            needSwapDirection = true;
         }
         super.collide(prev, player, gameGrid, movables, k+1);
     }

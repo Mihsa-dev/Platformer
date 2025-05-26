@@ -23,9 +23,16 @@ public class Platformer extends JPanel {
 
         this.levelManager = new LevelManager();
         GameObj.levelManager = this.levelManager;
-        player = new Player("sprites/blackPlayer.png",
+//        player = new Player(
+//                levelManager.getCurrentLevel().getPlayerPosX(),
+//                levelManager.getCurrentLevel().getPlayerPosY(),
+//                "sprites/blackPlayer.png"
+//        );
+        player = new Player(
                 levelManager.getCurrentLevel().getPlayerPosX(),
-                levelManager.getCurrentLevel().getPlayerPosY());
+                levelManager.getCurrentLevel().getPlayerPosY(),
+                "sprites/bat_up.png", "sprites/bat_up_reverse.png", "sprites/bat_down.png", "sprites/bat_down_reverse.png"
+        );
 
         useAllStart();
         this.gameRenderer = new GameRenderer(levelManager, player);

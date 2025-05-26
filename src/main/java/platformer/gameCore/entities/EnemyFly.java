@@ -13,10 +13,11 @@ public class EnemyFly extends GameObj{
 
     private int vx;  // Скорость по X
     private int vy;  // Скорость по Y
+    private boolean direction; // 1 - движение вправо, 0 - движение влево
     private Player player;
 
-    public EnemyFly(String spriteName, int x, int y) {
-        super(spriteName, x, y);
+    public EnemyFly(int x, int y, String... spriteNames) {
+        super(x, y, spriteNames);
         movable = true;
         solid = true;
         pushable = true;
@@ -28,16 +29,37 @@ public class EnemyFly extends GameObj{
         vy = 1;  // Базовая скорость по вертикали
 
         player = Platformer.player;
+
+        if (getPositionX() <= player.getPositionX()) {
+            spriteStorage.setCurrentIndex(0);
+            direction = true;
+        }
+        else{
+            spriteStorage.setCurrentIndex(1);
+            direction = false;
+        }
     }
 
     @Override
     public void update() {
-        if (getPositionX() <= player.getPositionX()){
+        if (player.getPositionX() - getPositionX() > 2){
             vx = 2;
+            if (!direction){
+                spriteStorage.increaseCurrentIndex();
+            }
+            direction = true;
+        }
+        else if (getPositionX() - player.getPositionX() > 2){
+            vx = -2;
+            if (direction){
+                spriteStorage.decreaseCurrentIndex();
+            }
+            direction = false;
         }
         else{
-            vx = -2;
+            vx = 0;
         }
+
         if (getPositionY() <= player.getPositionY()){
             vy = 1;
         }

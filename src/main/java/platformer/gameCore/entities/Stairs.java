@@ -6,7 +6,7 @@ import static platformer.gameCore.utils.Constant.SpriteSize;
 
 public class Stairs extends GameObj{
     public Stairs(String spriteName, int x, int y) {
-        super(spriteName, x, y);
+        super(x, y, spriteName);
         movable = false;
         solid = false;
     }

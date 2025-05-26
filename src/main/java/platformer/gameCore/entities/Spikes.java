@@ -7,7 +7,7 @@ import static platformer.gameCore.utils.Constant.SpriteSize;
 public class Spikes extends GameObj{
 
     public Spikes(String spriteName, int x, int y) {
-        super(spriteName, x, y);
+        super(x, y, spriteName);
         movable = false;
         solid = true;
     }
