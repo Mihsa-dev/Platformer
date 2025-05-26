@@ -45,7 +45,7 @@ public class Level {
                     gameGrid[i][j] = new EmptyObj("sprites/empty.png", j * SpriteSize, i * SpriteSize);
                 }
                 else if(grid[i][j] == '0'){
-                    gameGrid[i][j] = new LevelEnd("sprites/scp_173_noBackground.png", j * SpriteSize, i * SpriteSize);
+                    gameGrid[i][j] = new LevelEnd("sprites/door.png", j * SpriteSize, i * SpriteSize);
                     levelEndPosInGridRow = i;
                     levelEndPosInGridColumn = j;
                 }
@@ -59,15 +59,15 @@ public class Level {
                     gameGrid[i][j] = new EmptyObj("sprites/empty.png", j * SpriteSize, i * SpriteSize);
                 }
                 else if(grid[i][j] == 'f'){
-                    movables.add(new EnemyFly("sprites/MYPGqYP10O0.jpg", j * SpriteSize, i * SpriteSize));
+                    movables.add(new EnemyFly("sprites/bat_up.png", j * SpriteSize, i * SpriteSize));
                     gameGrid[i][j] = new EmptyObj("sprites/empty.png", j * SpriteSize, i * SpriteSize);
                 }
                 else if(grid[i][j] == 'p'){
-                    movables.add(new EnemyPatrol("sprites/military_pig.jpg", j * SpriteSize, i * SpriteSize));
+                    movables.add(new EnemyPatrol("sprites/scp_173_noBackground.png", j * SpriteSize, i * SpriteSize));
                     gameGrid[i][j] = new EmptyObj("sprites/empty.png", j * SpriteSize, i * SpriteSize);
                 }
                 else if(grid[i][j] == 's'){
-                    movables.add(new EnemyStalker("sprites/hog.jpg", j * SpriteSize, i * SpriteSize));
+                    movables.add(new EnemyStalker("sprites/alien.png", j * SpriteSize, i * SpriteSize));
                     gameGrid[i][j] = new EmptyObj("sprites/empty.png", j * SpriteSize, i * SpriteSize);
                 }
                 else{
