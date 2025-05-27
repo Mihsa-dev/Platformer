@@ -1,11 +1,16 @@
 package platformer.gameCore.level;
 
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+
+import static platformer.gameCore.utils.Constant.SpriteSize;
 
 //загружает уровни из файлов
 public class LevelLoader {
@@ -29,8 +34,19 @@ public class LevelLoader {
 
     public static List<Level> loadAllLevels() throws IOException {
         List<Level> levels = new ArrayList<>();
-        levels.add(loadLevel("level_1.txt"));
-        levels.add(loadLevel("level_2.txt"));
+        //levels.add(loadLevel("level_1.txt"));
+        //levels.add(loadLevel("level_2.txt"));
+        //levels.add(loadLevel("level_3.txt"));
+        for (int i = 1; i < 100; i++){
+            String name = "level_" + String.valueOf(i) + ".txt";
+
+            try{
+                levels.add(loadLevel(name));
+            }
+            catch (IOException e){
+                System.err.println("сука, че с файлом:" + e.getMessage());
+            }
+        }
         return levels;
     }
 }

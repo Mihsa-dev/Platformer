@@ -30,7 +30,7 @@ public class EnemyStalker extends GameObj{
 
         player = Platformer.player;
 
-        if (getPositionX() <= player.getPositionX()) {
+        if (getPositionX() < player.getPositionX()) {
             spriteStorage.setCurrentIndex(0);
             direction = true;
         }
